@@ -25,7 +25,7 @@ public class RobotContainer {
 	private ExampleCommand _autoCommand = new ExampleCommand(_exampleSubsystem);
 
 	public RobotContainer() {
-		_controlInput = new LegacyControl(RobotMap.LegacyControl.LEGACY_GAMEPAD);
+		_controlInput = new LegacyControl(RobotMap.Control.LEGACY_GAMEPAD);
 	}
 
 	public Command getAutonomousCommand() {

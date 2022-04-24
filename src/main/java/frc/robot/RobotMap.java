@@ -6,19 +6,15 @@ package frc.robot;
 public class RobotMap {
 
 	/**
-	 * Legacy Control ports (PC USB)
+	 * Control ports (PC USB)
 	 */
-	public class LegacyControl {
+	public class Control {
 		// Gamepad port for LegacyControl scheme
 		public static final int LEGACY_GAMEPAD = 0;
+		
+		// Gamepad ports for DoubleControl scheme
+		public static final int DOUBLE_GAMEPAD_1 = 0;
+		public static final int DOUBLE_GAMEPAD_2 = 1;
 	}
 
-	/**
-	 * Double Control ports (PC USB)
-	 */
-	public class DoubleControl {
-		// Gamepad ports for DoubleControl scheme
-		public static final int GAMEPAD_1 = 0;
-		public static final int GAMEPAD_2 = 0;
-	}
 }

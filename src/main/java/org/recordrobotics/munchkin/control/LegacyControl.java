@@ -1,4 +1,4 @@
-package frc.robot.control;
+package org.recordrobotics.munchkin.control;
 
 import edu.wpi.first.wpilibj.XboxController;
 

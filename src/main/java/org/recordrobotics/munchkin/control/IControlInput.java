@@ -1,4 +1,4 @@
-package frc.robot.control;
+package org.recordrobotics.munchkin.control;
 
 /**
  * Specifies all control inputs needed for the robot

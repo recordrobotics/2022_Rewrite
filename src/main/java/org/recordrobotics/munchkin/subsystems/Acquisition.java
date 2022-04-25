@@ -36,8 +36,8 @@ public class Acquisition extends SubsystemBase {
 	 * @param speed base value for speed calculations, always >0
 	 */
 	public void spin(double speed) {
-		_spinMotor.set(speed);
-		_ballChannelMotor.set(speed * BALL_CHANNEL_MOD);
+		_spinMotor.set(Subsystems.limitSpeed(speed));
+		_ballChannelMotor.set(Subsystems.limitSpeed(speed * BALL_CHANNEL_MOD));
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class Acquisition extends SubsystemBase {
 	 */
 	public void tilt(double speed) {
 		if (speed < 0 && _tiltLimitSwitch.get() || speed > 0 ) {
-			_tiltMotor.set(speed);
+			_tiltMotor.set(Subsystems.limitSpeed(speed));
 		} else {
 			_tiltMotor.set(0);
 		}

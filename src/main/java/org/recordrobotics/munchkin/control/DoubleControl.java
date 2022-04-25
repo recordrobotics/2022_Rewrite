@@ -29,7 +29,7 @@ public class DoubleControl implements IControlInput {
 
 	@Override
 	public double getRotate() {
-		return _gamepad2.getLeftX();
+		return _gamepad2.getRightX();
 	}
 
 	@Override

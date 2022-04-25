@@ -13,8 +13,9 @@ package org.recordrobotics.munchkin;
  * constants are needed, to reduce verbosity.
  */
 /**
- * TODO: PROGRAMMER NOTE: organize constants alphabetically, first by file name then by variable name
+ * TODO: PROGRAMMER NOTE: organize constants alphabetically by variable name
  */
 public final class Constants {
-
+	// maximum limit for motors to spin, used in all subsystems
+	public static final double SPEED_LIMIT = 0.85;
 }

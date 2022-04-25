@@ -5,6 +5,7 @@
 package org.recordrobotics.munchkin;
 
 import org.recordrobotics.munchkin.commands.ExampleCommand;
+import org.recordrobotics.munchkin.control.DoubleControl;
 import org.recordrobotics.munchkin.control.IControlInput;
 import org.recordrobotics.munchkin.control.LegacyControl;
 import org.recordrobotics.munchkin.subsystems.Acquisition;
@@ -33,6 +34,7 @@ public class RobotContainer {
 
 	public RobotContainer() {
 		_controlInput = new LegacyControl(RobotMap.Control.LEGACY_GAMEPAD);
+		//_controlInput = new DoubleControl(RobotMap.Control.DOUBLE_GAMEPAD_1, RobotMap.Control.DOUBLE_GAMEPAD_2);
 		_acquisition = new Acquisition();
 		_acquisition.setDefaultCommand(new ManualAcquisition(_acquisition, _controlInput));
 	}

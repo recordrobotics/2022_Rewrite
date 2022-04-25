@@ -5,7 +5,7 @@
 package org.recordrobotics.munchkin;
 
 import org.recordrobotics.munchkin.commands.ExampleCommand;
-import org.recordrobotics.munchkin.control.DoubleControl;
+//import org.recordrobotics.munchkin.control.DoubleControl;
 import org.recordrobotics.munchkin.control.IControlInput;
 import org.recordrobotics.munchkin.control.LegacyControl;
 import org.recordrobotics.munchkin.subsystems.Acquisition;

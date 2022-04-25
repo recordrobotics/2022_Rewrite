@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package org.recordrobotics.munchkin.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -7,7 +7,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import frc.robot.RobotMap;
+import org.recordrobotics.munchkin.RobotMap;
 
 public class Climbers extends SubsystemBase {
 	private CANSparkMax _motorLeft = new CANSparkMax(RobotMap.Climbers.LEFT_MOTOR_PORT, MotorType.kBrushless);

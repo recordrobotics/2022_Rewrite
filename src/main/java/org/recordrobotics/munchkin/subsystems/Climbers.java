@@ -41,7 +41,11 @@ public class Climbers extends SubsystemBase {
 	 * Moves lift up and down.
 	 * @param v how fast the lift motors spins.
 	 */
-	public void moveLift(double v) {
-		_motors.set(v);
+	public void move(double v) {
+		if (v < 0 || v > 0 ) {
+			_motors.set(Subsystems.limitSpeed(v));
+		} else {
+			_motors.set(v);
+		}
 	}
 }

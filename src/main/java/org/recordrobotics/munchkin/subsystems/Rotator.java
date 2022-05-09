@@ -10,10 +10,13 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Rotator extends SubsystemBase {
+
 	private CANSparkMax _leftMotor = new CANSparkMax(RobotMap.Rotator.LEFT_MOTOR_PORT, MotorType.kBrushless);
 	private CANSparkMax _rightMotor = new CANSparkMax(RobotMap.Rotator.RIGHT_MOTOR_PORT, MotorType.kBrushless);
+
 	private RelativeEncoder _leftEncoder = _leftMotor.getEncoder();
 	private RelativeEncoder _rightEncoder = _rightMotor.getEncoder();
+
 	private DigitalInput _forwardLimit = new DigitalInput(RobotMap.Rotator.FWD_LIMIT_PORT);
 	private DigitalInput _backwardLimit = new DigitalInput(RobotMap.Rotator.BWD_LIMIT_PORT);
 
@@ -51,5 +54,13 @@ public class Rotator extends SubsystemBase {
 			_leftMotor.set(0);
 			_rightMotor.set(0);
 		}
+	}
+
+	/**
+	 * Return the inversed state of the forward limit switch
+	 * @return true is pressed, false is not
+	 */
+	public boolean isFwdLimitPressed() {
+		return !_forwardLimit.get();
 	}
 }

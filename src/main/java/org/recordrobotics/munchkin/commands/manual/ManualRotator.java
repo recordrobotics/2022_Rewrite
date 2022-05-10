@@ -5,6 +5,9 @@ import org.recordrobotics.munchkin.subsystems.Rotator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+/**
+ * Rotator teleop command
+ */
 public class ManualRotator extends CommandBase {
 	private Rotator _rotator;
 	private IControlInput _controls;

@@ -1,5 +1,8 @@
 package org.recordrobotics.munchkin.commands.auto;
 
+/**
+ * Direction for auto commands
+ */
 public enum Direction {
 
 	BACKWARD(-1),

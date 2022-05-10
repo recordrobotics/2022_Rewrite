@@ -4,6 +4,10 @@ import org.recordrobotics.munchkin.subsystems.Rotator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+/**
+ * Move lift towards the E-board limit switch
+ * Resets encoder at that point
+ */
 public class AutoResetRotator extends CommandBase {
 
 	private Rotator _rotator;

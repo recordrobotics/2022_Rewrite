@@ -4,6 +4,9 @@ import org.recordrobotics.munchkin.subsystems.Rotator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+/**
+ * Rotate to encoder value target
+ */
 public class AutoRotateTo extends CommandBase {
 
 	private Rotator _rotator;

@@ -4,6 +4,10 @@ import org.recordrobotics.munchkin.subsystems.Climbers;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+/**
+ * Pull up the climbers completely
+ * 0 is assumed to be fully retracted
+ */
 public class AutoPullUp extends CommandBase {
 
 	private Climbers _climbers;

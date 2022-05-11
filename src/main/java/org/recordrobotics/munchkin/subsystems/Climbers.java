@@ -15,7 +15,7 @@ public class Climbers extends SubsystemBase {
 	private CANSparkMax _motorRight = new CANSparkMax(RobotMap.Climbers.RIGHT_MOTOR_PORT, MotorType.kBrushless);
 	private MotorControllerGroup _motors = new MotorControllerGroup(_motorLeft, _motorRight);
 	private RelativeEncoder _encoder = _motorLeft.getEncoder();
-	
+
 	public Climbers() {
 		_motors.set(0);
 	}

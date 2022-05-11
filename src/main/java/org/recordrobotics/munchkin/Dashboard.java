@@ -1,7 +1,10 @@
-package org.recordrobotics.munchkin.subsystems;
+package org.recordrobotics.munchkin;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.recordrobotics.munchkin.subsystems.*;
+//import org.recordrobotics.munchkin.commands.auto.*;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -29,6 +32,11 @@ public class Dashboard extends SubsystemBase {
 		_sensors = sensors;
 		_climbers = climbers;
 		_rotator = rotator;
+		addCommands();
+	}
+
+	private void addCommands() {
+		// once the commands are written, put their calls here
 	}
 
 	public ShuffleboardTab getTab(String tabName) {

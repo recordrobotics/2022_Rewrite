@@ -8,6 +8,7 @@ public class AutoMoveDistance extends CommandBase {
 	private Drive _drive;
 	private double _speed;
 	private double _targetDistance;
+	private Direction _direction;
 
 	public AutoMoveDistance(Drive drive, double speed, double targetDistance) {
 		if (drive == null) {
@@ -17,7 +18,7 @@ public class AutoMoveDistance extends CommandBase {
 			throw new IllegalArgumentException("Speed must be positive");
 		}
 		_drive = drive;
-		
+
 		_speed = speed;
 		_targetDistance = targetDistance;
 	}
@@ -27,8 +28,9 @@ public class AutoMoveDistance extends CommandBase {
 	 */
 	@Override
 	public void initialize() {
-		_drive.resetEncoders();
-		_drive.move(0, _speed);
+		double dx = _targetDistance - _drive.getPosition();
+		_direction = dx > 0 ? Direction.DOWN : Direction.UP;
+		_drive.move(0, _speed * _direction.value());
 	}
 
 	/**
@@ -36,7 +38,7 @@ public class AutoMoveDistance extends CommandBase {
 	 */
 	@Override
 	public boolean isFinished() {
-		return _drive.getPosition() >= _targetDistance;
+		return _drive.getPosition() * _direction.value() >= _targetDistance * _direction.value();
 	}
 	/**
 	 * Stops the wheels once finished

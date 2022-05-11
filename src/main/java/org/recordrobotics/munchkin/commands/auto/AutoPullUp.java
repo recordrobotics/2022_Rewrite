@@ -30,7 +30,7 @@ public class AutoPullUp extends CommandBase {
 	 * Pull climbers up
 	 */
 	@Override
-	public void execute() {
+	public void initialize() {
 		_climbers.move(_speed);
 	}
 

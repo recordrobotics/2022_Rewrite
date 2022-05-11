@@ -30,7 +30,7 @@ public class AutoResetRotator extends CommandBase {
 	 * Move lift towards reset position
 	 */
 	@Override
-	public void execute() {
+	public void initialize() {
 		_rotator.rotate(_speed);
 	}
 

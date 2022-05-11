@@ -26,17 +26,17 @@ public class AutoRotateTo extends CommandBase {
 		_speed = speed;
 		_target = target;
 		addRequirements(rotator);
-
-		// Calculate direction
-		double dx = target - rotator.getPosition();
-		_direction = dx > 0 ? Direction.FORWARD : Direction.BACKWARD;
 	}
 
 	/**
-	 * Rotate towards target
+	 * Rotate lift towards target
 	 */
 	@Override
-	public void execute() {
+	public void initialize() {
+		// Calculate direction
+		double dx = _target - _rotator.getPosition();
+		_direction = dx > 0 ? Direction.FORWARD : Direction.BACKWARD;
+
 		_rotator.rotate(_speed * _direction.value());
 	}
 

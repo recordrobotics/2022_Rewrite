@@ -23,14 +23,14 @@ public class AutoClimbTo extends CommandBase {
 		_target = target;
 		_speed = speed;
 		addRequirements(climbers);
-
-		// Calculate direction
-		double dx = target - climbers.getEncoderValue();
-		_direction = dx > 0 ? Direction.DOWN : Direction.UP;
 	}
 
 	@Override
-	public void execute() {
+	public void initialize() {
+		// Calculate direction
+		double dx = _target - _climbers.getEncoderValue();
+		_direction = dx > 0 ? Direction.DOWN : Direction.UP;
+
 		_climbers.move(_speed * _direction.value());
 	}
 

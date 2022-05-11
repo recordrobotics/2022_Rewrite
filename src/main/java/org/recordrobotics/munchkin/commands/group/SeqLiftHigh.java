@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
  * 	- Robot will hang from high bar with climbers
  */
 public class SeqLiftHigh extends SequentialCommandGroup {
-	
+
 	public SeqLiftHigh(Rotator rotator, Climbers climbers) {
 		addCommands(
 			new SeqLiftMid(rotator, climbers),

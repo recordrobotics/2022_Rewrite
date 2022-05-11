@@ -52,6 +52,6 @@ public class Climbers extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		Shuffleboard.getTab("values").add("CIB Encoder", getEncoderValue()).getEntry().setDouble(getEncoderValue());;
+		Shuffleboard.getTab("values").add("CIB Encoder", getEncoderValue()).getEntry().setDouble(getEncoderValue());
 	}
 }

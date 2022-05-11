@@ -1,23 +1,18 @@
 package org.recordrobotics.munchkin.subsystems;
 
-import org.recordrobotics.munchkin.Dashboard;
 import org.recordrobotics.munchkin.RobotMap;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Sensors extends SubsystemBase {
 	private DigitalInput _ballDetector = new DigitalInput(RobotMap.Sensors.BALL_DETECTOR_PORT);
 	private Ultrasonic _rangeFinderA = new Ultrasonic(RobotMap.Sensors.RANGE_FINDER_A_PING, RobotMap.Sensors.RANGE_FINDER_A_ECHO);
 	private Ultrasonic _rangeFinderB = new Ultrasonic(RobotMap.Sensors.RANGE_FINDER_B_PING, RobotMap.Sensors.RANGE_FINDER_B_ECHO);
-	private Dashboard _dashboard;
 
-	public Sensors(Dashboard dashboard) {
-		if (dashboard == null) {
-			throw new IllegalArgumentException("Dashboard is null");
-		}
-		_dashboard = dashboard;
+	public Sensors() {
 		_rangeFinderA.setEnabled(true);
 		_rangeFinderB.setEnabled(true);
 	}
@@ -51,8 +46,8 @@ public class Sensors extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		_dashboard.getTab("values").add("Range Finder Right", getADistance()).getEntry().setDouble(getADistance());
-		_dashboard.getTab("values").add("Range Finder Left", getBDistance()).getEntry().setDouble(getBDistance());
-		_dashboard.getTab("values").add("Ball Detected", getBallDetector()).getEntry().setBoolean(getBallDetector());
+		Shuffleboard.getTab("values").add("Range Finder Right", getADistance()).getEntry().setDouble(getADistance());
+		Shuffleboard.getTab("values").add("Range Finder Left", getBDistance()).getEntry().setDouble(getBDistance());
+		Shuffleboard.getTab("values").add("Ball Detected", getBallDetector()).getEntry().setBoolean(getBallDetector());
 	}
 }

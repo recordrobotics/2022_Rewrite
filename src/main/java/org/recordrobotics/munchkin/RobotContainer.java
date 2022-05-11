@@ -8,6 +8,7 @@ import org.recordrobotics.munchkin.control.*;
 import org.recordrobotics.munchkin.subsystems.*;
 import org.recordrobotics.munchkin.commands.manual.*;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -21,22 +22,23 @@ public class RobotContainer {
 	// Subsystems
 	private Acquisition _acquisition;
 	private Climbers _climbers;
-	private Dashboard _dashboard;
 	private Drive _drive;
 	private Flywheel _flywheel;
 	private Rotator _rotator;
 	//private Sensors _sensors;
 
 	public RobotContainer() {
-		_dashboard = new Dashboard();
-		//_sensors = new Sensors(_dashboard);
+		Shuffleboard.getTab("Values");
+		Shuffleboard.getTab("Cameras");
+		Shuffleboard.getTab("Commands");
+		//_sensors = new Sensors();
 		_controlInput = new LegacyControl(RobotMap.Control.LEGACY_GAMEPAD);
 		// _controlInput = new DoubleControl(RobotMap.Control.DOUBLE_GAMEPAD_1,
 		// RobotMap.Control.DOUBLE_GAMEPAD_2);
 		_acquisition = new Acquisition();
-		_climbers = new Climbers(_dashboard);
+		_climbers = new Climbers();
 		_flywheel = new Flywheel();
-		_rotator = new Rotator(_dashboard);
+		_rotator = new Rotator();
 		_drive = new Drive();
 	}
 

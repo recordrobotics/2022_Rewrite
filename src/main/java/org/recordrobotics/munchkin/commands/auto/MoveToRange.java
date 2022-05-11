@@ -12,7 +12,7 @@ public class MoveToRange extends CommandBase {
 	private double _targetRange;
 
 	/**
-	 * 
+	 *
 	 * @param drive drive subsystem
 	 * @param sensors sensors subsystem
 	 * @param speed speed of movement (positive)

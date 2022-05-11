@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
  * Climb robot from ground to middle bar
  * Setup:
  * 	- Climbers extended and placed directly above bar
- *	- Acquisition is completely out
  * Expected outcome:
  * 	- Robot will hang from middle bar with climbers
  */

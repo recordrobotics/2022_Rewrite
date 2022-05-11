@@ -21,7 +21,6 @@ public class AutoShoot extends CommandBase {
 		}
 		_speed = speed;
 		_flywheel = flywheel;
-		_flywheel.spin(0);
 		addRequirements(flywheel);
 	}
 

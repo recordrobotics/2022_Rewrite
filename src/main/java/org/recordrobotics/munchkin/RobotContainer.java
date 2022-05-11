@@ -6,9 +6,9 @@ package org.recordrobotics.munchkin;
 
 import org.recordrobotics.munchkin.control.*;
 import org.recordrobotics.munchkin.subsystems.*;
+import org.recordrobotics.munchkin.commands.group.SeqLiftMid;
 import org.recordrobotics.munchkin.commands.manual.*;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 /**
@@ -49,13 +49,17 @@ public class RobotContainer {
 	}
 
 	/**
+	 * Create autonomous mode commands
+	 */
+	public void autoInit() {
+		CommandScheduler.getInstance().schedule(true,
+			new SeqLiftMid(_rotator, _climbers));
+	}
+
+	/**
 	 * Clear commands
 	 */
 	public void resetCommands() {
 		CommandScheduler.getInstance().cancelAll();
-	}
-
-	public Command getAutonomousCommand() {
-		return null;
 	}
 }

@@ -4,25 +4,20 @@ import org.recordrobotics.munchkin.subsystems.Drive;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class MoveDistance extends CommandBase {
+public class AutoMoveDistance extends CommandBase {
 	private Drive _drive;
 	private double _speed;
 	private double _targetDistance;
 
-	public MoveDistance(Drive drive, double speed, double targetDistance) {
+	public AutoMoveDistance(Drive drive, double speed, double targetDistance) {
 		if (drive == null) {
 			throw new IllegalArgumentException("Drive is null");
 		}
-		if (speed == 0) {
-			throw new IllegalArgumentException("Speed is 0");
-		}
-		if (targetDistance == 0) {
-			throw new IllegalArgumentException("Target is 0");
-		}
-		if (speed >= 0 && targetDistance <= 0 || speed <= 0 && targetDistance >= 0) {
-			throw new IllegalArgumentException("Speed and Target are opposites");
+		if (speed <= 0) {
+			throw new IllegalArgumentException("Speed must be positive");
 		}
 		_drive = drive;
+		
 		_speed = speed;
 		_targetDistance = targetDistance;
 	}
@@ -41,7 +36,7 @@ public class MoveDistance extends CommandBase {
 	 */
 	@Override
 	public boolean isFinished() {
-		return _targetDistance > 0 && _drive.getPosition() >= _targetDistance || _targetDistance < 0 && _drive.getPosition() <= _targetDistance;
+		return _drive.getPosition() >= _targetDistance;
 	}
 	/**
 	 * Stops the wheels once finished

@@ -5,7 +5,7 @@ import org.recordrobotics.munchkin.subsystems.Sensors;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class MoveToRange extends CommandBase {
+public class AutoMoveToRange extends CommandBase {
 	private Drive _drive;
 	private Sensors _sensors;
 	private double _speed;
@@ -18,7 +18,7 @@ public class MoveToRange extends CommandBase {
 	 * @param speed speed of movement (positive)
 	 * @param targetRange target distance to go to (positive, millimeters)
 	 */
-	public MoveToRange(Drive drive, Sensors sensors, double speed, double targetRange) {
+	public AutoMoveToRange(Drive drive, Sensors sensors, double speed, double targetRange) {
 		if (drive == null) {
 			throw new IllegalArgumentException("Drive is null");
 		}
@@ -26,10 +26,10 @@ public class MoveToRange extends CommandBase {
 			throw new IllegalArgumentException("Sensors is null");
 		}
 		if (speed <= 0) {
-			throw new IllegalArgumentException("Speed is invalid");
+			throw new IllegalArgumentException("Speed must be positive");
 		}
 		if (targetRange <= 0) {
-			throw new IllegalArgumentException("Target is invalid");
+			throw new IllegalArgumentException("Target must be positive");
 		}
 		_drive = drive;
 		_speed = speed;

@@ -4,11 +4,11 @@ import org.recordrobotics.munchkin.subsystems.Acquisition;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class AutoTilt extends CommandBase {
+public class AutoDeployAcq extends CommandBase {
 	private Acquisition _acquisition;
 	private double _speed;
 
-	public AutoTilt(Acquisition acquisition, double speed) {
+	public AutoDeployAcq(Acquisition acquisition, double speed) {
 		if (speed <= 0) {
 			throw new IllegalArgumentException("Speed must be positive");
 		}
@@ -18,7 +18,6 @@ public class AutoTilt extends CommandBase {
 		// setting _speed to -speed so the aquisition tilts down
 		_speed = -speed;
 		_acquisition = acquisition;
-		_acquisition.tilt(0);
 		addRequirements(acquisition);
 	}
 
@@ -26,7 +25,7 @@ public class AutoTilt extends CommandBase {
 	 * tilt acquisition down
 	 */
 	@Override
-	public void execute() {
+	public void initialize() {
 		_acquisition.tilt(_speed);
 	}
 
@@ -35,7 +34,7 @@ public class AutoTilt extends CommandBase {
 	 */
 	@Override
 	public boolean isFinished() {
-		return !_acquisition.getTiltState();
+		return _acquisition.getTiltState();
 	}
 
 	/**

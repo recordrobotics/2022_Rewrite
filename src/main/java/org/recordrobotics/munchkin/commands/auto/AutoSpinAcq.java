@@ -9,7 +9,7 @@ public class AutoSpinAcq extends CommandBase {
 	private Acquisition _acquisition;
 	private double _speed;
 	private Timer _collectTimer = new Timer();
-	private static final double COLLECT_TIME = 10.0; // the total time the flywheel will be running (start up time + time it takes to shoot the ball)
+	private static final double COLLECT_TIME = 10.0; // the total time the acquisition system will be running (through the wheels + past the ball channel)
 
 	public AutoSpinAcq(Acquisition acquisition, double speed) {
 		if (speed <= 0) {
@@ -34,7 +34,7 @@ public class AutoSpinAcq extends CommandBase {
 	}
 
 	/**
-	 * command ends when ball channel limit switch is hit
+	 * command ends when a set amt of time passes
 	 */
 	@Override
 	public boolean isFinished() {

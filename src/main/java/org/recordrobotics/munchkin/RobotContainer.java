@@ -21,23 +21,23 @@ public class RobotContainer {
 	// Subsystems
 	private Acquisition _acquisition;
 	private Climbers _climbers;
-	//private Dashboard _dashboard;
+	private Dashboard _dashboard;
 	private Drive _drive;
 	private Flywheel _flywheel;
 	private Rotator _rotator;
 	//private Sensors _sensors;
 
 	public RobotContainer() {
-		//_sensors = new Sensors();
+		_dashboard = new Dashboard();
+		//_sensors = new Sensors(_dashboard);
 		_controlInput = new LegacyControl(RobotMap.Control.LEGACY_GAMEPAD);
 		// _controlInput = new DoubleControl(RobotMap.Control.DOUBLE_GAMEPAD_1,
 		// RobotMap.Control.DOUBLE_GAMEPAD_2);
 		_acquisition = new Acquisition();
-		_climbers = new Climbers();
+		_climbers = new Climbers(_dashboard);
 		_flywheel = new Flywheel();
-		_rotator = new Rotator();
+		_rotator = new Rotator(_dashboard);
 		_drive = new Drive();
-		//_dashboard = new Dashboard(_sensors, _climbers, _rotator);
 	}
 
 	/**

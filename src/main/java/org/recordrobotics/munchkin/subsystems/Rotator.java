@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import org.recordrobotics.munchkin.Dashboard;
 import org.recordrobotics.munchkin.RobotMap;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -16,10 +17,15 @@ public class Rotator extends SubsystemBase {
 	private RelativeEncoder _rightEncoder = _rightMotor.getEncoder();
 	private DigitalInput _forwardLimit = new DigitalInput(RobotMap.Rotator.FWD_LIMIT_PORT);
 	private DigitalInput _backwardLimit = new DigitalInput(RobotMap.Rotator.BWD_LIMIT_PORT);
+	private Dashboard _dashboard;
 
-	public Rotator() {
+	public Rotator(Dashboard dashboard) {
+		if (dashboard == null) {
+			throw new IllegalArgumentException("Dashboard is null");
+		}
 		_leftMotor.set(0);
 		_rightMotor.set(0);
+		_dashboard = dashboard;
 	}
 
 	/**
@@ -51,5 +57,10 @@ public class Rotator extends SubsystemBase {
 			_leftMotor.set(0);
 			_rightMotor.set(0);
 		}
+	}
+
+	@Override
+	public void periodic() {
+		_dashboard.getTab("values").add("Rotator Encoder", getPosition()).getEntry().setDouble(getPosition());
 	}
 }

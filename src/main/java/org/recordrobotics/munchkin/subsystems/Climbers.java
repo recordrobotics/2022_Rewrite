@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import org.recordrobotics.munchkin.Dashboard;
 import org.recordrobotics.munchkin.RobotMap;
 
 public class Climbers extends SubsystemBase {
@@ -14,6 +15,15 @@ public class Climbers extends SubsystemBase {
 	private CANSparkMax _motorRight = new CANSparkMax(RobotMap.Climbers.RIGHT_MOTOR_PORT, MotorType.kBrushless);
 	private MotorControllerGroup _motors = new MotorControllerGroup(_motorLeft, _motorRight);
 	private RelativeEncoder _encoder = _motorLeft.getEncoder();
+	private Dashboard _dashboard;
+
+	public Climbers(Dashboard dashboard) {
+		if (dashboard == null) {
+			throw new IllegalArgumentException("Dashboard is null");
+		}
+		_dashboard = dashboard;
+		_motors.set(0);
+	}
 
 	/**
 	 * Stops the motors.
@@ -43,5 +53,10 @@ public class Climbers extends SubsystemBase {
 	 */
 	public void move(double v) {
 		_motors.set(Subsystems.limitSpeed(v));
+	}
+
+	@Override
+	public void periodic() {
+		_dashboard.getTab("values").add("CIB Encoder", getEncoderValue()).getEntry().setDouble(getEncoderValue());;
 	}
 }

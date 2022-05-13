@@ -4,23 +4,33 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import org.recordrobotics.munchkin.Constants;
 import org.recordrobotics.munchkin.RobotMap;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Rotator extends SubsystemBase {
 	private CANSparkMax _leftMotor = new CANSparkMax(RobotMap.Rotator.LEFT_MOTOR_PORT, MotorType.kBrushless);
 	private CANSparkMax _rightMotor = new CANSparkMax(RobotMap.Rotator.RIGHT_MOTOR_PORT, MotorType.kBrushless);
+
 	private RelativeEncoder _leftEncoder = _leftMotor.getEncoder();
 	private RelativeEncoder _rightEncoder = _rightMotor.getEncoder();
+
 	private DigitalInput _forwardLimit = new DigitalInput(RobotMap.Rotator.FWD_LIMIT_PORT);
 	private DigitalInput _backwardLimit = new DigitalInput(RobotMap.Rotator.BWD_LIMIT_PORT);
+
+	private NetworkTableEntry _entryEncoder;
 
 	public Rotator() {
 		_leftMotor.set(0);
 		_rightMotor.set(0);
+
+		ShuffleboardTab tab = Shuffleboard.getTab(Constants.DATA_TAB);
+		_entryEncoder = tab.add("Rotator position", 0.0).getEntry();
 	}
 
 	/**
@@ -54,8 +64,11 @@ public class Rotator extends SubsystemBase {
 		}
 	}
 
+	/**
+	 * Update dashboard value
+	 */
 	@Override
 	public void periodic() {
-		Shuffleboard.getTab("values").add("Rotator Encoder", getPosition()).getEntry().setDouble(getPosition());
+		_entryEncoder.setDouble(getPosition());
 	}
 }

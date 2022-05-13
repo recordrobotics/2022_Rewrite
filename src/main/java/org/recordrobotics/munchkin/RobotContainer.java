@@ -8,7 +8,6 @@ import org.recordrobotics.munchkin.control.*;
 import org.recordrobotics.munchkin.subsystems.*;
 import org.recordrobotics.munchkin.commands.manual.*;
 
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -25,13 +24,11 @@ public class RobotContainer {
 	private Drive _drive;
 	private Flywheel _flywheel;
 	private Rotator _rotator;
-	//private Sensors _sensors;
+	// This will be used in auto commands later
+	@SuppressWarnings({"PMD.SingularField", "PMD.UnusedPrivateField", "unused"})
+	private Sensors _sensors;
 
 	public RobotContainer() {
-		Shuffleboard.getTab("Values");
-		Shuffleboard.getTab("Cameras");
-		Shuffleboard.getTab("Commands");
-		//_sensors = new Sensors();
 		_controlInput = new LegacyControl(RobotMap.Control.LEGACY_GAMEPAD);
 		// _controlInput = new DoubleControl(RobotMap.Control.DOUBLE_GAMEPAD_1,
 		// RobotMap.Control.DOUBLE_GAMEPAD_2);
@@ -40,6 +37,7 @@ public class RobotContainer {
 		_flywheel = new Flywheel();
 		_rotator = new Rotator();
 		_drive = new Drive();
+		_sensors = new Sensors();
 	}
 
 	/**

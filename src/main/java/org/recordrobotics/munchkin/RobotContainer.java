@@ -10,7 +10,7 @@ import org.recordrobotics.munchkin.subsystems.*;
 import java.util.Arrays;
 import java.util.List;
 
-import org.recordrobotics.munchkin.commands.dashboard.DashChangeControl;
+import org.recordrobotics.munchkin.commands.dashboard.DashRunProcedure;
 import org.recordrobotics.munchkin.commands.dashboard.DashResetClimbEncoder;
 import org.recordrobotics.munchkin.commands.group.SeqLiftMid;
 import org.recordrobotics.munchkin.commands.manual.*;
@@ -81,8 +81,8 @@ public class RobotContainer {
 	private void initDashCommands() {
 		ShuffleboardTab tab = Shuffleboard.getTab(Constants.COMMANDS_TAB);
 		tab.add("Reset Climbers Encoder", new DashResetClimbEncoder(_climbers));
-		tab.add("Legacy Control", new DashChangeControl(this::controlLegacy));
-		tab.add("Double Control", new DashChangeControl(this::controlDouble));
+		tab.add("Legacy Control", new DashRunProcedure(this::controlLegacy));
+		tab.add("Double Control", new DashRunProcedure(this::controlDouble));
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class RobotContainer {
 		ShuffleboardTab tab = Shuffleboard.getTab(Constants.DATA_TAB);
 		_entryControl = tab.add("Control Type", "").getEntry();
 	}
-	
+
 	/**
 	 * Set control scheme to legacy
 	 */

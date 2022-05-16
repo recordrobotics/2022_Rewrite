@@ -15,6 +15,7 @@ import org.recordrobotics.munchkin.commands.dashboard.DashResetClimbEncoder;
 import org.recordrobotics.munchkin.commands.group.SeqLiftMid;
 import org.recordrobotics.munchkin.commands.manual.*;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -24,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * Contains subsystems, control and command scheduling
  */
 public class RobotContainer {
+
 	// Control Scheme
 	private IControlInput _controlInput;
 
@@ -41,9 +43,11 @@ public class RobotContainer {
 	private List<Command> _teleopCommands;
 	private Command _autoCommand;
 
+	// Dashboard data
+	private NetworkTableEntry _entryControl;
+
 	public RobotContainer() {
 		_controlInput = new LegacyControl(RobotMap.Control.LEGACY_GAMEPAD);
-		// _controlInput = new DoubleControl(RobotMap.Control.DOUBLE_GAMEPAD_1,
 		_acquisition = new Acquisition();
 		_climbers = new Climbers();
 		_flywheel = new Flywheel();
@@ -51,9 +55,10 @@ public class RobotContainer {
 		_drive = new Drive();
 		_sensors = new Sensors();
 
+		initEntries();
+		initDashCommands();
 		initTeleopCommands();
 		initAutoCommand();
-		initDashCommands();
 	}
 
 	private void initTeleopCommands() {
@@ -63,6 +68,7 @@ public class RobotContainer {
 			new ManualFlywheel(_flywheel, _controlInput),
 			new ManualRotator(_rotator, _controlInput),
 			new ManualDrive(_drive, _controlInput));
+		_entryControl.setValue(_controlInput.toString());
 	}
 
 	private void initAutoCommand() {
@@ -78,6 +84,32 @@ public class RobotContainer {
 		tab.add("Legacy Control", new DashChangeControl(this::controlLegacy));
 		tab.add("Double Control", new DashChangeControl(this::controlDouble));
 	}
+
+	/**
+	 * Initialize dashboard entries
+	 */
+	private void initEntries() {
+		ShuffleboardTab tab = Shuffleboard.getTab(Constants.DATA_TAB);
+		_entryControl = tab.add("Control Type", "").getEntry();
+	}
+	
+	/**
+	 * Set control scheme to legacy
+	 */
+	private void controlLegacy() {
+		_controlInput = new LegacyControl(RobotMap.Control.LEGACY_GAMEPAD);
+		initTeleopCommands();
+	}
+
+	/**
+	 * Set control scheme to double
+	 */
+	private void controlDouble() {
+		_controlInput = new DoubleControl(RobotMap.Control.DOUBLE_GAMEPAD_1,
+			RobotMap.Control.DOUBLE_GAMEPAD_2);
+		initTeleopCommands();
+	}
+
 
 	/**
 	 * Create teleop commands
@@ -100,23 +132,6 @@ public class RobotContainer {
 	 */
 	public void resetCommands() {
 		CommandScheduler.getInstance().cancelAll();
-	}
-
-	/**
-	 * Set control scheme to legacy
-	 */
-	public void controlLegacy() {
-		_controlInput = new LegacyControl(RobotMap.Control.LEGACY_GAMEPAD);
-		initTeleopCommands();
-	}
-
-	/**
-	 * Set control scheme to double
-	 */
-	public void controlDouble() {
-		_controlInput = new DoubleControl(RobotMap.Control.DOUBLE_GAMEPAD_1,
-			RobotMap.Control.DOUBLE_GAMEPAD_2);
-		initTeleopCommands();
 	}
 
 }

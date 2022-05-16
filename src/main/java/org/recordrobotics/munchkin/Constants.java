@@ -5,7 +5,7 @@ package org.recordrobotics.munchkin;
  */
 public final class Constants {
 
-	public static final String DATA_TAB = "data";
 	public static final String COMMANDS_TAB = "commands";
+	public static final String DATA_TAB = "data";
 
 }

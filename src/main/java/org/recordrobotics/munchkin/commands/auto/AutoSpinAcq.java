@@ -51,7 +51,7 @@ public class AutoSpinAcq extends CommandBase {
 	@Override
 	public void end(boolean interrupted) {
 		_acquisition.spin(0);
-		_collectTimer.reset();
 		_collectTimer.stop();
+		_collectTimer.reset();
 	}
 }

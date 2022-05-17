@@ -72,7 +72,7 @@ public class Rotator extends SubsystemBase {
 	public boolean isFwdLimitPressed() {
 		return !_forwardLimit.get();
 	}
-	
+
 	/**
 	 * Update dashboard value
 	 */

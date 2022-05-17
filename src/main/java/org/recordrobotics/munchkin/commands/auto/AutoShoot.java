@@ -48,7 +48,7 @@ public class AutoShoot extends CommandBase {
 	public void end(boolean interrupted) {
 		_flywheel.spin(0);
 		_flywheel.resetServos();
-		_shootTimer.reset();
 		_shootTimer.stop();
+		_shootTimer.reset();
 	}
 }

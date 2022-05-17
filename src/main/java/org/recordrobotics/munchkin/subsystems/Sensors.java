@@ -1,9 +1,13 @@
 package org.recordrobotics.munchkin.subsystems;
 
+import org.recordrobotics.munchkin.Constants;
 import org.recordrobotics.munchkin.RobotMap;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Sensors extends SubsystemBase {
@@ -11,9 +15,20 @@ public class Sensors extends SubsystemBase {
 	private Ultrasonic _rangeFinderA = new Ultrasonic(RobotMap.Sensors.RANGE_FINDER_A_PING, RobotMap.Sensors.RANGE_FINDER_A_ECHO);
 	private Ultrasonic _rangeFinderB = new Ultrasonic(RobotMap.Sensors.RANGE_FINDER_B_PING, RobotMap.Sensors.RANGE_FINDER_B_ECHO);
 
+	// Dashboard entries
+	private NetworkTableEntry _entryRangeA;
+	private NetworkTableEntry _entryRangeB;
+	private NetworkTableEntry _entryBallDetection;
+
 	public Sensors() {
 		_rangeFinderA.setEnabled(true);
 		_rangeFinderB.setEnabled(true);
+
+		// Set up dashboard
+		ShuffleboardTab tab = Shuffleboard.getTab(Constants.DATA_TAB);
+		_entryRangeA = tab.add("Range Finder A", 0.0).getEntry();
+		_entryRangeB =  tab.add("Range Finder B", 0.0).getEntry();
+		_entryBallDetection = tab.add("Ball Detection", false).getEntry();
 	}
 
 	/**
@@ -41,5 +56,15 @@ public class Sensors extends SubsystemBase {
 	 */
 	public boolean getBallDetector() {
 		return !_ballDetector.get();
+	}
+
+	/**
+	 * Updates dashboard entries
+	 */
+	@Override
+	public void periodic() {
+		_entryRangeA.setDouble(getADistance());
+		_entryRangeB.setDouble(getBDistance());
+		_entryBallDetection.setBoolean(getBallDetector());
 	}
 }

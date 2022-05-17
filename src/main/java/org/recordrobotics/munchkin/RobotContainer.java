@@ -97,17 +97,21 @@ public class RobotContainer {
 	 * Set control scheme to legacy
 	 */
 	private void controlLegacy() {
+		resetCommands();
 		_controlInput = new LegacyControl(RobotMap.Control.LEGACY_GAMEPAD);
 		initTeleopCommands();
+		teleopInit();
 	}
 
 	/**
 	 * Set control scheme to double
 	 */
 	private void controlDouble() {
+		resetCommands();
 		_controlInput = new DoubleControl(RobotMap.Control.DOUBLE_GAMEPAD_1,
 			RobotMap.Control.DOUBLE_GAMEPAD_2);
 		initTeleopCommands();
+		teleopInit();
 	}
 
 

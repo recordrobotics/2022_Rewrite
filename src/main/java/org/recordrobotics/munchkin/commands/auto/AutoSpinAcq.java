@@ -9,17 +9,21 @@ public class AutoSpinAcq extends CommandBase {
 	private Acquisition _acquisition;
 	private double _speed;
 	private Timer _collectTimer = new Timer();
-	private static final double COLLECT_TIME = 10.0; // the total time the acquisition system will be running (through the wheels + past the ball channel)
+	private double _collectTime; // the total time the acquisition system will be running (through the wheels + past the ball channel)
 
-	public AutoSpinAcq(Acquisition acquisition, double speed) {
+	public AutoSpinAcq(Acquisition acquisition, double speed, double collectTime) {
 		if (speed <= 0) {
 			throw new IllegalArgumentException("Speed must be positive");
 		}
 		if (acquisition == null) {
 			throw new IllegalArgumentException("Acquisition is null");
 		}
+		if (collectTime < 0) {
+			throw new IllegalArgumentException("Collect Time must be positive");
+		}
 		// setting _speed to -speed so the aquisition intakes balls
 		_speed = -speed;
+		_collectTime = collectTime;
 		_acquisition = acquisition;
 		addRequirements(acquisition);
 	}
@@ -38,7 +42,7 @@ public class AutoSpinAcq extends CommandBase {
 	 */
 	@Override
 	public boolean isFinished() {
-		return _collectTimer.get() > COLLECT_TIME;
+		return _collectTimer.get() > _collectTime;
 	}
 
 	/**

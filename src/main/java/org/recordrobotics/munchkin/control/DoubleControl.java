@@ -89,4 +89,10 @@ public class DoubleControl implements IControlInput {
 	public boolean getServos() {
 		return _gamepad1.getAButton();
 	}
+
+	@Override
+	public String toString() {
+		return "Double";
+	}
+
 }

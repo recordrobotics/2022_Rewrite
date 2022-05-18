@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Rotator extends SubsystemBase {
+
 	private CANSparkMax _leftMotor = new CANSparkMax(RobotMap.Rotator.LEFT_MOTOR_PORT, MotorType.kBrushless);
 	private CANSparkMax _rightMotor = new CANSparkMax(RobotMap.Rotator.RIGHT_MOTOR_PORT, MotorType.kBrushless);
 
@@ -65,6 +66,14 @@ public class Rotator extends SubsystemBase {
 	}
 
 	/**
+	 * Return the inversed state of the forward limit switch
+	 * @return true is pressed, false is not
+	 */
+	public boolean isFwdLimitPressed() {
+		return !_forwardLimit.get();
+	}
+
+	/*
 	 * Update dashboard value
 	 */
 	@Override

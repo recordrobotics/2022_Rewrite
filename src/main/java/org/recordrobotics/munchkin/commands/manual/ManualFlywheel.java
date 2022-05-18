@@ -5,6 +5,9 @@ import org.recordrobotics.munchkin.control.IControlInput;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+/**
+ * Flywheel teleop command
+ */
 public class ManualFlywheel extends CommandBase {
 	private Flywheel _flywheel;
 	private IControlInput _controls;

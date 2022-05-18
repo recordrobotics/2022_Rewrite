@@ -86,4 +86,9 @@ public class LegacyControl implements IControlInput {
 		return _gamepad.getAButton();
 	}
 
+	@Override
+	public String toString() {
+		return "Legacy";
+	}
+
 }

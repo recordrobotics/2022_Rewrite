@@ -5,6 +5,9 @@ import org.recordrobotics.munchkin.subsystems.Acquisition;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+/**
+ * Acquisition teleop command
+ */
 public class ManualAcquisition extends CommandBase {
 	private Acquisition _acquisition;
 	private IControlInput _controls;

@@ -5,6 +5,9 @@ import org.recordrobotics.munchkin.subsystems.Rotator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+/**
+ * Rotator teleop command
+ */
 public class ManualRotator extends CommandBase {
 	private Rotator _rotator;
 	private IControlInput _controls;
@@ -25,11 +28,22 @@ public class ManualRotator extends CommandBase {
 	}
 
 	@Override
+	public void initialize() {
+		_rotator.rotate(0);
+	}
+
+	@Override
 	public void execute() {
 		double speed = _controls.getRotate();
+		System.out.println("rtt input: " + speed);
 		if (Math.abs(speed) < MIN_SPEED) {
 			speed = 0;
 		}
 		_rotator.rotate(speed);
+	}
+
+	@Override
+	public void end(boolean isInterrupted) {
+		_rotator.rotate(0);
 	}
 }

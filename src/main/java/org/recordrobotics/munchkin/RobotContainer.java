@@ -12,7 +12,9 @@ import java.util.List;
 
 import org.recordrobotics.munchkin.commands.dashboard.DashRunProcedure;
 import org.recordrobotics.munchkin.commands.dashboard.DashResetClimbEncoder;
+import org.recordrobotics.munchkin.commands.group.SeqLiftHigh;
 import org.recordrobotics.munchkin.commands.group.SeqLiftMid;
+import org.recordrobotics.munchkin.commands.group.SeqLiftNext;
 import org.recordrobotics.munchkin.commands.manual.*;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -83,6 +85,10 @@ public class RobotContainer {
 		tab.add("Reset Climbers Encoder", new DashResetClimbEncoder(_climbers));
 		tab.add("Legacy Control", new DashRunProcedure(this::controlLegacy));
 		tab.add("Double Control", new DashRunProcedure(this::controlDouble));
+		tab.add("Middle Bar", new SeqLiftMid(_rotator, _climbers));
+		tab.add("High Bar", new SeqLiftHigh(_rotator, _climbers));
+		tab.add("Traversal Bar", new SeqLiftHigh(_rotator, _climbers));
+		tab.add("Next Bar", new SeqLiftNext(_rotator, _climbers));
 	}
 
 	/**

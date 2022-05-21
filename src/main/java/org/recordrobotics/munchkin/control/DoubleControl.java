@@ -76,7 +76,7 @@ public class DoubleControl implements IControlInput {
 			_btnY = !_btnY;
 
 		// If X not pressed, clear Y
-		if (!_btnX) {
+		if (!_btnX || _gamepad1.getXButtonPressed()) {
 			_btnY = false;
 			return FlywheelState.OFF;
 		}
@@ -87,7 +87,7 @@ public class DoubleControl implements IControlInput {
 
 	@Override
 	public boolean getServos() {
-		return _gamepad1.getAButton();
+		return _gamepad1.getAButton() || _gamepad2.getAButton();
 	}
 
 	@Override

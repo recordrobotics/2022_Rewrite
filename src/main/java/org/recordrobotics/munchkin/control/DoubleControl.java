@@ -77,6 +77,7 @@ public class DoubleControl implements IControlInput {
 
 		// If X not pressed, clear Y
 		if (!_btnX || _gamepad1.getXButtonPressed()) {
+			_btnX = false;
 			_btnY = false;
 			return FlywheelState.OFF;
 		}

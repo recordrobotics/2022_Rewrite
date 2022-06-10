@@ -40,7 +40,7 @@ public class ManualAcquisition extends CommandBase {
 		}
 
 		// tilt controls (if = tilt down, else if = tilt up,  else = stop motor)
-		if (_controls.getAcqTilt() > 0) {
+		if (_controls.getAcqTilt() > 0 && !_acquisition.getTiltState()) {
 			_acquisition.tilt(TILT_SPEED);
 		} else if (_controls.getAcqTilt() < 0) {
 			_acquisition.tilt(-TILT_SPEED);

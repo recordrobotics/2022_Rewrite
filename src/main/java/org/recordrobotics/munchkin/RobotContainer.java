@@ -1,25 +1,23 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package org.recordrobotics.munchkin;
 
 import org.recordrobotics.munchkin.control.*;
 import org.recordrobotics.munchkin.subsystems.*;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.recordrobotics.munchkin.commands.dashboard.DashRunProcedure;
 import org.recordrobotics.munchkin.commands.dashboard.DashResetClimbEncoder;
 import org.recordrobotics.munchkin.commands.group.SeqLiftMid;
 import org.recordrobotics.munchkin.commands.manual.*;
+import org.recordrobotics.munchkin.util.Pair;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 
 /**
  * Contains subsystems, control and command scheduling
@@ -40,7 +38,7 @@ public class RobotContainer {
 	private Sensors _sensors;
 
 	// Commands
-	private List<Command> _teleopCommands;
+	private List<Pair<Subsystem, Command>> _teleopPairs;
 	private Command _autoCommand;
 
 	// Dashboard data
@@ -62,12 +60,12 @@ public class RobotContainer {
 	}
 
 	private void initTeleopCommands() {
-		_teleopCommands = Arrays.asList(
-			new ManualAcquisition(_acquisition, _controlInput),
-			new ManualClimbers(_climbers, _controlInput),
-			new ManualFlywheel(_flywheel, _controlInput),
-			new ManualRotator(_rotator, _controlInput),
-			new ManualDrive(_drive, _controlInput));
+		_teleopPairs = new ArrayList<>();
+		_teleopPairs.add(new Pair<Subsystem, Command>(_acquisition, new ManualAcquisition(_acquisition, _controlInput)));
+		_teleopPairs.add(new Pair<Subsystem, Command>(_climbers, new ManualClimbers(_climbers, _controlInput)));
+		_teleopPairs.add(new Pair<Subsystem, Command>(_flywheel, new ManualFlywheel(_flywheel, _controlInput)));
+		_teleopPairs.add(new Pair<Subsystem, Command>(_rotator, new ManualRotator(_rotator, _controlInput)));
+		_teleopPairs.add(new Pair<Subsystem, Command>(_drive, new ManualDrive(_drive, _controlInput)));
 		_entryControl.setValue(_controlInput.toString());
 	}
 
@@ -119,8 +117,8 @@ public class RobotContainer {
 	 * Create teleop commands
 	 */
 	public void teleopInit() {
-		for (Command c : _teleopCommands) {
-			CommandScheduler.getInstance().schedule(true, c);
+		for (Pair<Subsystem, Command> c : _teleopPairs) {
+			c.getKey().setDefaultCommand(c.getValue());
 		}
 	}
 

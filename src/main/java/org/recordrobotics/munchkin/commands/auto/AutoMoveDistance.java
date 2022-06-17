@@ -29,7 +29,7 @@ public class AutoMoveDistance extends CommandBase {
 	@Override
 	public void initialize() {
 		double dx = _targetDistance - _drive.getPosition();
-		_direction = dx > 0 ? Direction.DOWN : Direction.UP;
+		_direction = dx > 0 ? Direction.BACKWARD : Direction.FORWARD;
 		_drive.move(0, _speed * _direction.value());
 	}
 

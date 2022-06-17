@@ -73,7 +73,7 @@ public class Rotator extends SubsystemBase {
 		return !_forwardLimit.get();
 	}
 
-	/*
+	/**
 	 * Update dashboard value
 	 */
 	@Override

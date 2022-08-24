@@ -34,15 +34,15 @@ public class Drive extends SubsystemBase {
 
 	/**
 	 * drive the robot
-	 * @param longSpeed rotation speed (positive is clockwise)
 	 * @param latSpeed forward/backward speed (positive is forward)
+	 * @param longSpeed rotation speed (positive is clockwise)
 	 */
-	public void move(double longSpeed, double latSpeed) {
+	public void move(double latSpeed, double LongSpeed) {
 		// Arcade drive expects rotational inputs, while get translational
 		// inputs. Therefore the values must be switched around
 		// https://docs.wpilib.org/en/stable/docs/software/hardware-apis/motors/wpi-drive-classes.html
-		_differentialDrive.arcadeDrive(Subsystems.limitSpeed(latSpeed),
-			Subsystems.limitSpeed(-longSpeed));
+		_differentialDrive.arcadeDrive(Subsystems.limitSpeed(longSpeed),
+			Subsystems.limitSpeed(-latSpeed));
 	}
 
 	/**

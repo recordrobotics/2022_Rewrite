@@ -42,6 +42,7 @@ public class AutoMoveToRange extends CommandBase {
 	 */
 	@Override
 	public void initialize() {
+		_drive.resetEncoders();
 		_drive.move(0, _speed);
 	}
 

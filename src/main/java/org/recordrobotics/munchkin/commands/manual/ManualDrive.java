@@ -5,6 +5,7 @@
 package org.recordrobotics.munchkin.commands.manual;
 
 import org.recordrobotics.munchkin.control.IControlInput;
+import org.recordrobotics.munchkin.Constants;
 import org.recordrobotics.munchkin.subsystems.Drive;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -14,8 +15,12 @@ public class ManualDrive extends CommandBase {
 
 	private Drive _drive;
 	private IControlInput _controls;
+	private double _controlScaleLong;
+	private double _controlScaleLat;
+	private double _time;
+	private Boolean _ramping;
 
-	public ManualDrive(Drive drive, IControlInput controls) {
+	public ManualDrive(Drive drive, IControlInput controls, Boolean ramping) {
 		if (drive == null) {
 			throw new IllegalArgumentException("Drive is null");
 		}
@@ -25,13 +30,41 @@ public class ManualDrive extends CommandBase {
 
 		_drive = drive;
 		_controls = controls;
+		_ramping = ramping;
 		addRequirements(drive);
+	}
+
+	public double calcNextCtrlScale(double input, double time) {
+		double nextCtrlScale = 0.0;
+		if(time == Constants.ZERO) {
+			return 0.0;
+		}
+		if(input != Constants.ZERO) {
+			nextCtrlScale = (input/Math.abs(input))*Math.pow(Constants.MOVEMENT_EXPONENTIAL_BASE, time/50 - 1);
+		}
+		if(nextCtrlScale < -1.0 || nextCtrlScale > 1.0) {
+			nextCtrlScale = nextCtrlScale/Math.abs(nextCtrlScale);
+		}
+		return nextCtrlScale;
 	}
 
 	@Override
 	public void execute() {
-		_drive.move(_controls.getDriveLong() * SPEED_MODIFIER,
-			_controls.getDriveLat() * SPEED_MODIFIER);
+		if(_ramping) {
+			if (_controls.getDriveLong() == 0.0 && _controls.getDriveLat() == 0.0) {
+				_time = 0.0;
+			}
+			else {
+				_time += 1;
+			}
+			_controlScaleLong = calcNextCtrlScale(_controls.getDriveLong(), _time);
+			_controlScaleLat = calcNextCtrlScale(_controls.getDriveLat(), _time);
+			_drive.move(_controlScaleLong * SPEED_MODIFIER, _controlScaleLat * SPEED_MODIFIER);
+		}
+		else {
+			_drive.move(_controls.getDriveLong() * SPEED_MODIFIER,
+				_controls.getDriveLat() * SPEED_MODIFIER);
+		}
 	}
 
 	@Override

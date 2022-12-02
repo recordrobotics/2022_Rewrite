@@ -45,7 +45,7 @@ public class RobotContainer {
 			new ManualClimbers(_climbers, _controlInput),
 			new ManualFlywheel(_flywheel, _controlInput),
 			new ManualRotator(_rotator, _controlInput),
-			new ManualDrive(_drive, _controlInput));
+			new ManualDrive(_drive, _controlInput, true));
 	}
 
 	/**

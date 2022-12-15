@@ -17,7 +17,6 @@ public class ManualDrive extends CommandBase {
 	private IControlInput _controls;
 	private double _controlScaleLong;
 	private double _controlScaleLat;
-	private double _time;
 	private Boolean _ramping;
 
 	public ManualDrive(Drive drive, IControlInput controls, Boolean ramping) {
@@ -34,13 +33,15 @@ public class ManualDrive extends CommandBase {
 		addRequirements(drive);
 	}
 
-	public double calcNextCtrlScale(double input, double time) {
-		double nextCtrlScale = 0.0;
-		if(time == Constants.ZERO) {
-			return 0.0;
+	public double calcNextCtrlScale(double currControlScale, double input) {
+		double timeScale = Constants.DEFAULT_CONTROL_RAMPING;
+
+		if(input == Constants.ZERO) {
+			timeScale = Constants.NEUTRAL_CONTROL_RAMPING;
 		}
-		if(input != Constants.ZERO) {
-			nextCtrlScale = (input/Math.abs(input))*Math.pow(Constants.MOVEMENT_EXPONENTIAL_BASE, time/50 - 1);
+		double nextCtrlScale = currControlScale + (input - currControlScale)/timeScale;
+		if(Math.abs(input-currControlScale) <= Constants.RAMPING_JUMP_THRESHOLD) {
+			nextCtrlScale = input;
 		}
 		if(nextCtrlScale < -1.0 || nextCtrlScale > 1.0) {
 			nextCtrlScale = nextCtrlScale/Math.abs(nextCtrlScale);
@@ -51,14 +52,8 @@ public class ManualDrive extends CommandBase {
 	@Override
 	public void execute() {
 		if(_ramping) {
-			if (_controls.getDriveLong() == 0.0 && _controls.getDriveLat() == 0.0) {
-				_time = 0.0;
-			}
-			else {
-				_time += 1;
-			}
-			_controlScaleLong = calcNextCtrlScale(_controls.getDriveLong(), _time);
-			_controlScaleLat = calcNextCtrlScale(_controls.getDriveLat(), _time);
+			_controlScaleLong = calcNextCtrlScale(_controlScaleLong, _controls.getDriveLong());
+			_controlScaleLat = calcNextCtrlScale(_controlScaleLat, _controls.getDriveLat());
 			_drive.move(_controlScaleLong * SPEED_MODIFIER, _controlScaleLat * SPEED_MODIFIER);
 		}
 		else {

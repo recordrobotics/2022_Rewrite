@@ -6,4 +6,7 @@ package org.recordrobotics.munchkin;
 public final class Constants {
 	public final static double MOVEMENT_EXPONENTIAL_BASE = 10.0;
 	public final static double ZERO = 0.0;
+	public final static double RAMPING_JUMP_THRESHOLD = 0.1;
+	public final static double DEFAULT_CONTROL_RAMPING = 25.0;
+	public final static double NEUTRAL_CONTROL_RAMPING = 15.0;
 }

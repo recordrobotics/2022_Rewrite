@@ -6,6 +6,7 @@ package org.recordrobotics.munchkin.commands.manual;
 
 import org.recordrobotics.munchkin.control.IControlInput;
 import org.recordrobotics.munchkin.Constants;
+import org.recordrobotics.munchkin.control.ControlRamping;
 import org.recordrobotics.munchkin.subsystems.Drive;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -17,9 +18,10 @@ public class ManualDrive extends CommandBase {
 	private IControlInput _controls;
 	private double _controlScaleLong;
 	private double _controlScaleLat;
-	private Boolean _ramping;
+	private Boolean _rampingBool;
+	private ControlRamping _ramper;
 
-	public ManualDrive(Drive drive, IControlInput controls, Boolean ramping) {
+	public ManualDrive(Drive drive, IControlInput controls, Boolean rampingBool) {
 		if (drive == null) {
 			throw new IllegalArgumentException("Drive is null");
 		}
@@ -29,31 +31,18 @@ public class ManualDrive extends CommandBase {
 
 		_drive = drive;
 		_controls = controls;
-		_ramping = ramping;
+		_rampingBool = rampingBool;
+		if(_rampingBool) {
+			_ramper = new ControlRamping(Constants.DRIVE_MAX_CONTROL_RAMPING, Constants.DRIVE_CONTROL_RAMPING, true);
+		}
 		addRequirements(drive);
-	}
-
-	public double calcNextCtrlScale(double currControlScale, double input) {
-		double timeScale = Constants.DEFAULT_CONTROL_RAMPING;
-
-		if(input == Constants.ZERO) {
-			timeScale = Constants.NEUTRAL_CONTROL_RAMPING;
-		}
-		double nextCtrlScale = currControlScale + (input - currControlScale)/timeScale;
-		if(Math.abs(input-currControlScale) <= Constants.RAMPING_JUMP_THRESHOLD) {
-			nextCtrlScale = input;
-		}
-		if(nextCtrlScale < -1.0 || nextCtrlScale > 1.0) {
-			nextCtrlScale = nextCtrlScale/Math.abs(nextCtrlScale);
-		}
-		return nextCtrlScale;
 	}
 
 	@Override
 	public void execute() {
-		if(_ramping) {
-			_controlScaleLong = calcNextCtrlScale(_controlScaleLong, _controls.getDriveLong());
-			_controlScaleLat = calcNextCtrlScale(_controlScaleLat, _controls.getDriveLat());
+		if(_rampingBool) {
+			_controlScaleLong = _ramper.calcNextCtrlScale(_controlScaleLong, _controls.getDriveLong());
+			_controlScaleLat = _ramper.calcNextCtrlScale(_controlScaleLat, _controls.getDriveLat());
 			_drive.move(_controlScaleLong * SPEED_MODIFIER, _controlScaleLat * SPEED_MODIFIER);
 		}
 		else {

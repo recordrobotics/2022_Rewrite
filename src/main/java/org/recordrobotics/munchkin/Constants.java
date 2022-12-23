@@ -9,4 +9,6 @@ public final class Constants {
 	public final static double RAMPING_JUMP_THRESHOLD = 0.1;
 	public final static double DRIVE_CONTROL_RAMPING = 25.0;
 	public final static double DRIVE_MAX_CONTROL_RAMPING = 15.0;
+	public static final String COMMANDS_TAB = "commands";
+	public static final String DATA_TAB = "data";
 }

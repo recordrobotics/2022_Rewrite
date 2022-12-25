@@ -38,7 +38,7 @@ public class AutoMoveToRange extends CommandBase {
 	}
 
 	/**
-	 * resets encoders and starts move
+	 * starts moving at constructor speed
 	 */
 	@Override
 	public void initialize() {

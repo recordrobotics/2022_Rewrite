@@ -53,21 +53,21 @@ public class Drive extends SubsystemBase {
 	}
 
 	/**
-	 * @return The value of the right encoder in MM
+	 * @return The value of the right encoder in rotations
 	 */
 	private double getRightEncoder() {
 		return (_right[0].getEncoder().getPosition() + _right[1].getEncoder().getPosition()) / 2;
 	}
 
 	/**
-	 * @return The value of the left encoder in MM
+	 * @return The value of the left encoder in rotations
 	 */
 	private double getLeftEncoder() {
 		return (_left[0].getEncoder().getPosition() + _left[1].getEncoder().getPosition()) / 2;
 	}
 
 	/**
-	 * @return The average value of the two encoders, left and right, in MM
+	 * @return The average value of the two encoders, left and right, in rotations
 	 */
 	public double getPosition() {
 		return (getRightEncoder() + getLeftEncoder()) / 2;

@@ -8,6 +8,7 @@ public class AutoMoveDistance extends CommandBase {
 	private Drive _drive;
 	private double _speed;
 	private double _targetDistance;
+	private Direction _direction;
 
 	public AutoMoveDistance(Drive drive, double speed, double targetDistance) {
 		if (drive == null) {
@@ -28,8 +29,8 @@ public class AutoMoveDistance extends CommandBase {
 	@Override
 	public void initialize() {
 		_drive.resetEncoders();
-		int direction = _targetDistance > 0 ? -1 : 1;
-		_drive.move(0, _speed * direction);
+		_direction = _targetDistance > 0 ? Direction.FORWARD : Direction.BACKWARD;
+		_drive.move(0, _speed * _direction.value());
 	}
 
 	/**
@@ -37,7 +38,7 @@ public class AutoMoveDistance extends CommandBase {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (_targetDistance > 0) {
+		if (_direction == Direction.FORWARD) {
 			return _drive.getPosition() >= _targetDistance;
 		} else {
 			return _drive.getPosition() <= _targetDistance;

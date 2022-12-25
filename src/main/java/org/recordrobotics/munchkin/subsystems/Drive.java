@@ -27,9 +27,16 @@ public class Drive extends SubsystemBase {
 
 	private DifferentialDrive _differentialDrive = new DifferentialDrive(_leftMotors, _rightMotors);
 
+	private static final double GEAR_RATIO = 10.75;
+	private static final double WHEEL_DIAMETER = 0; // need to get wheel diameter
+
 	public Drive() {
 		_leftMotors.set(0);
 		_rightMotors.set(0);
+		_left[0].getEncoder().setPositionConversionFactor(WHEEL_DIAMETER * Math.PI / GEAR_RATIO);
+		_left[1].getEncoder().setPositionConversionFactor(WHEEL_DIAMETER * Math.PI / GEAR_RATIO);
+		_right[0].getEncoder().setPositionConversionFactor(WHEEL_DIAMETER * Math.PI / GEAR_RATIO);
+		_right[1].getEncoder().setPositionConversionFactor(WHEEL_DIAMETER * Math.PI / GEAR_RATIO);
 	}
 
 	/**
@@ -46,21 +53,21 @@ public class Drive extends SubsystemBase {
 	}
 
 	/**
-	 * @return The value of the right encoder in FEET
+	 * @return The value of the right encoder in MM
 	 */
 	private double getRightEncoder() {
 		return (_right[0].getEncoder().getPosition() + _right[1].getEncoder().getPosition()) / 2;
 	}
 
 	/**
-	 * @return The value of the left encoder in FEET
+	 * @return The value of the left encoder in MM
 	 */
 	private double getLeftEncoder() {
 		return (_left[0].getEncoder().getPosition() + _left[1].getEncoder().getPosition()) / 2;
 	}
 
 	/**
-	 * @return The average value of the two encoders, left and right, in FEET
+	 * @return The average value of the two encoders, left and right, in MM
 	 */
 	public double getPosition() {
 		return (getRightEncoder() + getLeftEncoder()) / 2;

@@ -39,7 +39,7 @@ public class AutoMoveDistance extends CommandBase {
 	 */
 	@Override
 	public boolean isFinished() {
-		return _drive.getPosition() * _direction.value() >= _targetDistance * _direction.value();
+		return _drive.getPosition() * _direction.value() >= _targetDistance * _direction.value(); // multiplied by _direction.value(), as if _direction.value() is BACKWARDS, the function will be true immediately
 	}
 	/**
 	 * Stops the wheels once finished

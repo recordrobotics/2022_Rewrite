@@ -37,7 +37,11 @@ public class AutoMoveDistance extends CommandBase {
 	 */
 	@Override
 	public boolean isFinished() {
-		return Math.abs(_drive.getPosition()) >= Math.abs(_targetDistance);
+		if (_targetDistance > 0) {
+			return _drive.getPosition() >= _targetDistance;
+		} else {
+			return _drive.getPosition() <= _targetDistance;
+		}
 	}
 	/**
 	 * Stops the wheels once finished

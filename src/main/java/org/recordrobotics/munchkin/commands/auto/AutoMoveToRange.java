@@ -50,7 +50,11 @@ public class AutoMoveToRange extends CommandBase {
 	 */
 	@Override
 	public boolean isFinished() {
-		return Math.abs(_sensors.getDistance() - _targetRange) <= 0;
+		if (_sensors.getDistance() > _targetRange) {
+			return _sensors.getDistance() <= _targetRange;
+		} else {
+			return _sensors.getDistance() >= _targetRange;
+		}
 	}
 	/**
 	 * Stops the wheels once finished

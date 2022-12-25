@@ -10,6 +10,7 @@ public class AutoMoveToRange extends CommandBase {
 	private Sensors _sensors;
 	private double _speed;
 	private double _targetRange;
+	private Direction _direction;
 
 	/**
 	 *
@@ -42,7 +43,8 @@ public class AutoMoveToRange extends CommandBase {
 	 */
 	@Override
 	public void initialize() {
-		_drive.move(0, _speed);
+		_direction = _sensors.getDistance() > _targetRange ? Direction.FORWARD : Direction.BACKWARD;
+		_drive.move(0, _speed * _direction.value());
 	}
 
 	/**
@@ -50,7 +52,7 @@ public class AutoMoveToRange extends CommandBase {
 	 */
 	@Override
 	public boolean isFinished() {
-		if (_sensors.getDistance() > _targetRange) {
+		if (_direction == Direction.FORWARD) {
 			return _sensors.getDistance() <= _targetRange;
 		} else {
 			return _sensors.getDistance() >= _targetRange;

@@ -30,7 +30,7 @@ public class AutoMoveDistance extends CommandBase {
 	public void initialize() {
 		_drive.resetEncoders();
 		_direction = _targetDistance > 0 ? Direction.FORWARD : Direction.BACKWARD;
-		_drive.move(0, _speed * _direction.value());
+		_drive.move(_speed * _direction.value(), 0);
 	}
 
 	/**

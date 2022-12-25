@@ -44,7 +44,7 @@ public class AutoMoveToRange extends CommandBase {
 	@Override
 	public void initialize() {
 		_direction = _sensors.getDistance() > _targetRange ? Direction.FORWARD : Direction.BACKWARD;
-		_drive.move(0, _speed * _direction.value());
+		_drive.move(_speed * _direction.value(), 0);
 	}
 
 	/**

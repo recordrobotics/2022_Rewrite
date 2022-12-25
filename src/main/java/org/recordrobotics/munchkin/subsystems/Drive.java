@@ -41,8 +41,8 @@ public class Drive extends SubsystemBase {
 
 	/**
 	 * drive the robot
-	 * @param longSpeed rotation speed (positive is clockwise)
-	 * @param latSpeed forward/backward speed (positive is forward)
+	 * @param longSpeed forward/backward (positive is forward)
+	 * @param latSpeed rotational speed (positive is clockwise)
 	 */
 	public void move(double longSpeed, double latSpeed) {
 		// Arcade drive expects rotational inputs, while get translational

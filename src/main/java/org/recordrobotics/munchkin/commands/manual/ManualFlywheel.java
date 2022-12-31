@@ -18,9 +18,9 @@ public class ManualFlywheel extends CommandBase {
 	private static final double HIGH_SPEED = 0.35;
 	private static final double LOW_SPEED = 0.22;
 	private static final double IDLE_SPEED = 0;
-	private static final String HIGH = "HIGH";
-	private static final String LOW = "LOW";
-	private static final String IDLE = "IDLE";
+	private static final String HIGH_TXT = "HIGH";
+	private static final String LOW_TXT = "LOW";
+	private static final String IDLE_TXT = "IDLE";
 	// used to reset servos
 	private boolean _servosUp;
 
@@ -39,7 +39,7 @@ public class ManualFlywheel extends CommandBase {
 		addRequirements(_flywheel);
 
 		ShuffleboardTab tab = Shuffleboard.getTab(Constants.DATA_TAB);
-		_entrySpeed = tab.add("Flywheel Speed", "Idle").getEntry();
+		_entrySpeed = tab.add("Flywheel Speed", IDLE_TXT).getEntry();
 	}
 
 	@Override
@@ -48,15 +48,15 @@ public class ManualFlywheel extends CommandBase {
 			case OFF:
 				_flywheel.spin(IDLE_SPEED);
 				_flywheel.resetServos();
-				_entrySpeed.setString(IDLE);
+				_entrySpeed.setString(IDLE_TXT);
 				return;
 			case LOW:
 				_flywheel.spin(LOW_SPEED);
-				_entrySpeed.setString(LOW);
+				_entrySpeed.setString(LOW_TXT);
 				break;
 			case HIGH:
 				_flywheel.spin(HIGH_SPEED);
-				_entrySpeed.setString(HIGH);
+				_entrySpeed.setString(HIGH_TXT);
 				break;
 		}
 

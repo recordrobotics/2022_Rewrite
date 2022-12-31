@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ManualFlywheel extends CommandBase {
 	private Flywheel _flywheel;
 	private IControlInput _controls;
-	// TODO: implement dashboard once we make it (it was there in the old code)
 	private static final double HIGH_SPEED = 0.35;
 	private static final double LOW_SPEED = 0.22;
 	private static final double IDLE_SPEED = 0;

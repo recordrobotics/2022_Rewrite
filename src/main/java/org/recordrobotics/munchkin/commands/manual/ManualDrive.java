@@ -5,9 +5,9 @@
 package org.recordrobotics.munchkin.commands.manual;
 
 import org.recordrobotics.munchkin.control.IControlInput;
-import org.recordrobotics.munchkin.Constants;
-import org.recordrobotics.munchkin.control.ControlRamping;
 import org.recordrobotics.munchkin.subsystems.Drive;
+import org.recordrobotics.munchkin.util.ControlRamping;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
@@ -16,15 +16,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ManualDrive extends CommandBase {
 
 	private static final double SPEED_MODIFIER = 0.5;
+	private static final double CTRL_RAMPING = 25.0;
+	private static final double MAX_CTRL_RAMPING = 15.0;
 
 	private Drive _drive;
 	private IControlInput _controls;
 	private double _controlScaleLong;
 	private double _controlScaleLat;
-	private Boolean _rampingBool;
+	private boolean _isRamping;
 	private ControlRamping _ramper;
 
-	public ManualDrive(Drive drive, IControlInput controls, Boolean rampingBool) {
+	public ManualDrive(Drive drive, IControlInput controls, boolean isRamping) {
 		if (drive == null) {
 			throw new IllegalArgumentException("Drive is null");
 		}
@@ -34,16 +36,16 @@ public class ManualDrive extends CommandBase {
 
 		_drive = drive;
 		_controls = controls;
-		_rampingBool = rampingBool;
-		if(_rampingBool) {
-			_ramper = new ControlRamping(Constants.DRIVE_MAX_CONTROL_RAMPING, Constants.DRIVE_CONTROL_RAMPING, true);
+		_isRamping = isRamping;
+		if (_isRamping) {
+			_ramper = new ControlRamping(MAX_CTRL_RAMPING, CTRL_RAMPING, true);
 		}
 		addRequirements(drive);
 	}
 
 	@Override
 	public void execute() {
-		if(_rampingBool) {
+		if (_isRamping) {
 			_controlScaleLong = _ramper.calcNextCtrlScale(_controlScaleLong, _controls.getDriveLong());
 			_controlScaleLat = _ramper.calcNextCtrlScale(_controlScaleLat, _controls.getDriveLat());
 			_drive.move(_controlScaleLong * SPEED_MODIFIER, _controlScaleLat * SPEED_MODIFIER);

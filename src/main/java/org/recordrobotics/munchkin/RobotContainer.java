@@ -67,7 +67,7 @@ public class RobotContainer {
 		_teleopPairs.add(new Pair<Subsystem, Command>(_climbers, new ManualClimbers(_climbers, _controlInput)));
 		_teleopPairs.add(new Pair<Subsystem, Command>(_flywheel, new ManualFlywheel(_flywheel, _controlInput)));
 		_teleopPairs.add(new Pair<Subsystem, Command>(_rotator, new ManualRotator(_rotator, _controlInput)));
-		_teleopPairs.add(new Pair<Subsystem, Command>(_drive, new ManualDrive(_drive, _controlInput)));
+		_teleopPairs.add(new Pair<Subsystem, Command>(_drive, new ManualDrive(_drive, _controlInput, true)));
 		_entryControl.setValue(_controlInput.toString());
 	}
 
@@ -123,12 +123,6 @@ public class RobotContainer {
 	 * Create teleop commands
 	 */
 	public void teleopInit() {
-		CommandScheduler.getInstance().schedule(true,
-			new ManualAcquisition(_acquisition, _controlInput),
-			new ManualClimbers(_climbers, _controlInput),
-			new ManualFlywheel(_flywheel, _controlInput),
-			new ManualRotator(_rotator, _controlInput),
-			new ManualDrive(_drive, _controlInput, true));
 		for (Pair<Subsystem, Command> c : _teleopPairs) {
 			c.getKey().setDefaultCommand(c.getValue());
 		}

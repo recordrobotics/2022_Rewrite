@@ -37,12 +37,15 @@ public class ManualFlywheel extends CommandBase {
 			case OFF:
 				_flywheel.spin(IDLE_SPEED);
 				_flywheel.resetServos();
+				_flywheel.setSpeed("Idle");
 				return;
 			case LOW:
 				_flywheel.spin(LOW_SPEED);
+				_flywheel.setSpeed("Low");
 				break;
 			case HIGH:
 				_flywheel.spin(HIGH_SPEED);
+				_flywheel.setSpeed("High");
 				break;
 		}
 

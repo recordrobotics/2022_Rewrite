@@ -3,9 +3,13 @@ package org.recordrobotics.munchkin.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import org.recordrobotics.munchkin.Constants;
 import org.recordrobotics.munchkin.RobotMap;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Flywheel extends SubsystemBase {
@@ -14,6 +18,11 @@ public class Flywheel extends SubsystemBase {
 	private static final double LEFT_SERVO_SHOOT = 0.33;
 	private static final double RIGHT_SERVO_RESET = 0.33;
 	private static final double LEFT_SERVO_RESET = 0.0;
+
+	// current speed (Idle, Low, High)
+	private String _speed = "Idle";
+
+	private NetworkTableEntry _entrySpeed;
 
 	// motor, servo, and limit switch variables
 	private WPI_TalonFX _motor = new WPI_TalonFX(RobotMap.Flywheel.MOTOR_PORT);
@@ -25,6 +34,9 @@ public class Flywheel extends SubsystemBase {
 	 */
 	public Flywheel() {
 		spin(0);
+
+		ShuffleboardTab tab = Shuffleboard.getTab(Constants.DATA_TAB);
+		_entrySpeed = tab.add("Flywheel Speed", "Idle").getEntry();
 	}
 
 	/**
@@ -49,5 +61,21 @@ public class Flywheel extends SubsystemBase {
 	public void resetServos() {
 		_leftServo.set(LEFT_SERVO_RESET);
 		_rightServo.set(RIGHT_SERVO_RESET);
+	}
+
+	/**
+	 * sets speed to parameter
+	 * @param newSpeed new speed value (string: "Idle", "Low", or "High")
+	 */
+	public void setSpeed(String newSpeed) {
+		_speed = newSpeed;
+	}
+
+	/**
+	 * Update dashboard data
+	 */
+	@Override
+	public void periodic() {
+		_entrySpeed.setString(_speed);
 	}
 }

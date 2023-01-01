@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.recordrobotics.munchkin.commands.dashboard.DashRunProcedure;
+import org.recordrobotics.munchkin.commands.dashboard.DashToggleDriveRamping;
 import org.recordrobotics.munchkin.commands.dashboard.DashResetClimbEncoder;
 import org.recordrobotics.munchkin.commands.group.SeqLiftHigh;
 import org.recordrobotics.munchkin.commands.group.SeqLiftMid;
@@ -67,7 +68,7 @@ public class RobotContainer {
 		_teleopPairs.add(new Pair<Subsystem, Command>(_climbers, new ManualClimbers(_climbers, _controlInput)));
 		_teleopPairs.add(new Pair<Subsystem, Command>(_flywheel, new ManualFlywheel(_flywheel, _controlInput)));
 		_teleopPairs.add(new Pair<Subsystem, Command>(_rotator, new ManualRotator(_rotator, _controlInput)));
-		_teleopPairs.add(new Pair<Subsystem, Command>(_drive, new ManualDrive(_drive, _controlInput, true)));
+		_teleopPairs.add(new Pair<Subsystem, Command>(_drive, new ManualDrive(_drive, _controlInput)));
 		_entryControl.setValue(_controlInput.toString());
 	}
 
@@ -87,6 +88,7 @@ public class RobotContainer {
 		tab.add("High Bar", new SeqLiftHigh(_rotator, _climbers));
 		tab.add("Traversal Bar", new SeqLiftHigh(_rotator, _climbers));
 		tab.add("Next Bar", new SeqLiftNext(_rotator, _climbers));
+		tab.add("Toggle Drive Ramping", new DashToggleDriveRamping(_drive));
 	}
 
 	/**

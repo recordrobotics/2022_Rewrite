@@ -28,7 +28,7 @@ public class Drive extends SubsystemBase {
 	private DifferentialDrive _differentialDrive = new DifferentialDrive(_leftMotors, _rightMotors);
 
 	private static final double GEAR_RATIO = 10.75;
-	private static final double WHEEL_DIAMETER = 0; // need to get wheel diameter
+	private static final double WHEEL_DIAMETER = 6 * 25.4; // diameter in inches * conversion rate to millimeters
 
 	public Drive() {
 		_leftMotors.set(0);
@@ -53,21 +53,21 @@ public class Drive extends SubsystemBase {
 	}
 
 	/**
-	 * @return The value of the right encoder in (UNITS TBD)
+	 * @return The value of the right encoder in MM
 	 */
 	private double getRightEncoder() {
 		return (_right[0].getEncoder().getPosition() + _right[1].getEncoder().getPosition()) / 2;
 	}
 
 	/**
-	 * @return The value of the left encoder in (UNITS TBD)
+	 * @return The value of the left encoder in MM
 	 */
 	private double getLeftEncoder() {
 		return (_left[0].getEncoder().getPosition() + _left[1].getEncoder().getPosition()) / 2;
 	}
 
 	/**
-	 * @return The average value of the two encoders, left and right, in (UNITS TBD)
+	 * @return The average value of the two encoders, left and right, in MM
 	 */
 	public double getPosition() {
 		return (getRightEncoder() + getLeftEncoder()) / 2;

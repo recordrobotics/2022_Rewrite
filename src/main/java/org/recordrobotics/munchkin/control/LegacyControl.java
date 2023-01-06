@@ -17,7 +17,7 @@ public class LegacyControl implements IControlInput {
 
 	@Override
 	public double getDriveLong() {
-		return _gamepad.getLeftY();
+		return -_gamepad.getLeftY();
 	}
 
 	@Override

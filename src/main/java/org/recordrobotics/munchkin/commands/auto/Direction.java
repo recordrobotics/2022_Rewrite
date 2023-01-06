@@ -5,7 +5,7 @@ package org.recordrobotics.munchkin.commands.auto;
  */
 public enum Direction {
 
-	// Rotator
+	// Rotator & Drive
 	BACKWARD(-1),
 	FORWARD(1),
 	// Climbers

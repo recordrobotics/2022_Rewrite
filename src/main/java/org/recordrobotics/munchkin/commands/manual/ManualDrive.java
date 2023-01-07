@@ -8,6 +8,9 @@ import org.recordrobotics.munchkin.control.IControlInput;
 import org.recordrobotics.munchkin.subsystems.Drive;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+/**
+ * Drive teleop command
+ */
 public class ManualDrive extends CommandBase {
 
 	private static final double SPEED_MODIFIER = 0.5;

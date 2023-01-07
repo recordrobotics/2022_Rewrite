@@ -5,6 +5,9 @@ import org.recordrobotics.munchkin.control.IControlInput;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+/**
+ * Climber teleop command
+ */
 public class ManualClimbers extends CommandBase {
 	private Climbers _climbers;
 	private IControlInput _controls;

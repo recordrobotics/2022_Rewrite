@@ -25,7 +25,7 @@ public class Acquisition extends SubsystemBase {
 
 	/**
 	 * returns the state of the acquisition tilt
-	 * @return true if up, false if down
+	 * @return true if down, false if up
 	 */
 	public boolean getTiltState() {
 		return !_tiltLimitSwitch.get();

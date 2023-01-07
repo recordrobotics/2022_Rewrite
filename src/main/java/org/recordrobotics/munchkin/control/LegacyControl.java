@@ -17,7 +17,7 @@ public class LegacyControl implements IControlInput {
 
 	@Override
 	public double getDriveLong() {
-		return _gamepad.getLeftY();
+		return -_gamepad.getLeftY();
 	}
 
 	@Override
@@ -84,6 +84,11 @@ public class LegacyControl implements IControlInput {
 	@Override
 	public boolean getServos() {
 		return _gamepad.getAButton();
+	}
+
+	@Override
+	public String toString() {
+		return "Legacy";
 	}
 
 }

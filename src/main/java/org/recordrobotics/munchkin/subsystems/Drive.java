@@ -22,7 +22,7 @@ public class Drive extends SubsystemBase {
 	private static final double RAMPING_JUMP_THRESHOLD = 0.1;
 	private static final double CTRL_NEUTRAL_POSITION = 0.0; // If the input is less than this constant, it is considered in a neutral position.
 	private static final double MAX_CTRL_SCALE = 1.0;
-	
+
 	public boolean _isRamping = true;
 
 	private MotorControllerGroup _leftMotors = new MotorControllerGroup(
@@ -45,10 +45,10 @@ public class Drive extends SubsystemBase {
 
 		ShuffleboardTab tab = Shuffleboard.getTab(Constants.DATA_TAB);
 		_entryRamping = tab.add("Drive Ramping", true).getEntry();
-		
+
 	}
 
-	/** 
+	/**
 	 * Limit the double between min and max. Just a safety precaution.
 	 * @param value current value of input
 	 * @param min minimum value to constrain the input into

@@ -42,6 +42,7 @@ public class RobotContainer {
 	// Commands
 	private List<Pair<Subsystem, Command>> _teleopPairs;
 	private Command _autoCommand;
+	private ManualDrive _manualDrive;
 
 	// Dashboard data
 	private NetworkTableEntry _entryControl;
@@ -57,7 +58,7 @@ public class RobotContainer {
 
 		initEntries();
 		initDashCommands();
-		initTeleopCommands();
+		initTeleopCommands(); // Is it OK to change the order of these? Just want to guarantee that _manualDrive is always init before dashboard command changes a value in it...
 		initAutoCommand();
 	}
 
@@ -67,7 +68,7 @@ public class RobotContainer {
 		_teleopPairs.add(new Pair<Subsystem, Command>(_climbers, new ManualClimbers(_climbers, _controlInput)));
 		_teleopPairs.add(new Pair<Subsystem, Command>(_flywheel, new ManualFlywheel(_flywheel, _controlInput)));
 		_teleopPairs.add(new Pair<Subsystem, Command>(_rotator, new ManualRotator(_rotator, _controlInput)));
-		_teleopPairs.add(new Pair<Subsystem, Command>(_drive, new ManualDrive(_drive, _controlInput, true)));
+		_teleopPairs.add(new Pair<Subsystem, Command>(_drive, _manualDrive));
 		_entryControl.setValue(_controlInput.toString());
 	}
 
@@ -81,6 +82,7 @@ public class RobotContainer {
 	private void initDashCommands() {
 		ShuffleboardTab tab = Shuffleboard.getTab(Constants.COMMANDS_TAB);
 		tab.add("Reset Climbers Encoder", new DashResetClimbEncoder(_climbers));
+		tab.add("Drive Acceleration Ramping", new DashRunProcedure(_drive::toggleAccRamping));
 		tab.add("Legacy Control", new DashRunProcedure(this::controlLegacy));
 		tab.add("Double Control", new DashRunProcedure(this::controlDouble));
 		tab.add("Middle Bar", new SeqLiftMid(_rotator, _climbers));
@@ -117,7 +119,6 @@ public class RobotContainer {
 		initTeleopCommands();
 		teleopInit();
 	}
-
 
 	/**
 	 * Create teleop commands

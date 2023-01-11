@@ -6,7 +6,6 @@ package org.recordrobotics.munchkin.commands.manual;
 
 import org.recordrobotics.munchkin.control.IControlInput;
 import org.recordrobotics.munchkin.subsystems.Drive;
-import org.recordrobotics.munchkin.util.ControlRamping;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -24,9 +23,8 @@ public class ManualDrive extends CommandBase {
 	private double _controlScaleLong;
 	private double _controlScaleLat;
 	private boolean _isRamping;
-	private ControlRamping _ramper;
 
-	public ManualDrive(Drive drive, IControlInput controls, boolean isRamping) {
+	public ManualDrive(Drive drive, IControlInput controls) {
 		if (drive == null) {
 			throw new IllegalArgumentException("Drive is null");
 		}
@@ -36,21 +34,21 @@ public class ManualDrive extends CommandBase {
 
 		_drive = drive;
 		_controls = controls;
-		_isRamping = isRamping;
-		if (_isRamping) {
-			_ramper = new ControlRamping(MAX_CTRL_RAMPING, CTRL_RAMPING, true);
-		}
+		_isRamping = true;
 		addRequirements(drive);
+	}
+
+	public void toggleAccRamping() {
+		_isRamping = !_isRamping;
 	}
 
 	@Override
 	public void execute() {
-		if (_isRamping) {
-			_controlScaleLong = _ramper.calcNextCtrlScale(_controlScaleLong, _controls.getDriveLong());
-			_controlScaleLat = _ramper.calcNextCtrlScale(_controlScaleLat, _controls.getDriveLat());
+		if (_drive._isRamping) {
+			_controlScaleLong = _drive.calcNextCtrlScale(CTRL_RAMPING, MAX_CTRL_RAMPING, true, _controlScaleLong, _controls.getDriveLong());
+			_controlScaleLat = _drive.calcNextCtrlScale(CTRL_RAMPING, MAX_CTRL_RAMPING, true, _controlScaleLat, _controls.getDriveLat());
 			_drive.move(_controlScaleLong * SPEED_MODIFIER, _controlScaleLat * SPEED_MODIFIER);
-		}
-		else {
+		} else {
 			_drive.move(_controls.getDriveLong() * SPEED_MODIFIER,
 				_controls.getDriveLat() * SPEED_MODIFIER);
 		}

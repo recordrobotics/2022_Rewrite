@@ -70,7 +70,7 @@ public class Drive extends SubsystemBase {
 		if (Math.abs(input-currControlScale) <= RAMPING_JUMP_THRESHOLD) {
 			nextCtrlScale = input;
 		}
-		nextCtrlScale = Math.min(Math.max(nextCtrlScale, -MAX_CTRL_SCALE), MAX_CTRL_SCALE);
+		nextCtrlScale = Math.min(Math.max(nextCtrlScale, -MAX_CTRL_SCALE), MAX_CTRL_SCALE); // Limiting control scale between its max and min here
 		return nextCtrlScale;
 	}
 

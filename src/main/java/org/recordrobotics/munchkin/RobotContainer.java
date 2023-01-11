@@ -42,7 +42,6 @@ public class RobotContainer {
 	// Commands
 	private List<Pair<Subsystem, Command>> _teleopPairs;
 	private Command _autoCommand;
-	private ManualDrive _manualDrive;
 
 	// Dashboard data
 	private NetworkTableEntry _entryControl;
@@ -68,7 +67,7 @@ public class RobotContainer {
 		_teleopPairs.add(new Pair<Subsystem, Command>(_climbers, new ManualClimbers(_climbers, _controlInput)));
 		_teleopPairs.add(new Pair<Subsystem, Command>(_flywheel, new ManualFlywheel(_flywheel, _controlInput)));
 		_teleopPairs.add(new Pair<Subsystem, Command>(_rotator, new ManualRotator(_rotator, _controlInput)));
-		_teleopPairs.add(new Pair<Subsystem, Command>(_drive, _manualDrive));
+		_teleopPairs.add(new Pair<Subsystem, Command>(_drive, new ManualDrive(_drive, _controlInput)));
 		_entryControl.setValue(_controlInput.toString());
 	}
 

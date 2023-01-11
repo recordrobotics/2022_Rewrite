@@ -58,7 +58,7 @@ public class RobotContainer {
 
 		initEntries();
 		initDashCommands();
-		initTeleopCommands(); // Is it OK to change the order of these? Just want to guarantee that _manualDrive is always init before dashboard command changes a value in it...
+		initTeleopCommands();
 		initAutoCommand();
 	}
 

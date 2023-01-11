@@ -30,16 +30,17 @@ public class Drive extends SubsystemBase {
 	private static final double CTRL_NEUTRAL_POSITION = 0.0; // If the input is less than this constant, it is considered in a neutral position.
 	private static final double MAX_CTRL_SCALE = 1.0;
 
+	private static final double GEAR_RATIO = 10.75;
+	private static final double WHEEL_DIAMETER = 6 * 25.4; // diameter in inches * conversion rate to millimeters
+
 	public boolean _isRamping = true;
 
 	private NetworkTableEntry _entryRamping;
+
 	private MotorControllerGroup _leftMotors = new MotorControllerGroup(_left);
 	private MotorControllerGroup _rightMotors = new MotorControllerGroup(_right);
 
 	private DifferentialDrive _differentialDrive = new DifferentialDrive(_leftMotors, _rightMotors);
-
-	private static final double GEAR_RATIO = 10.75;
-	private static final double WHEEL_DIAMETER = 6 * 25.4; // diameter in inches * conversion rate to millimeters
 
 	public Drive() {
 		_leftMotors.set(0);
@@ -47,18 +48,6 @@ public class Drive extends SubsystemBase {
 
 		ShuffleboardTab tab = Shuffleboard.getTab(Constants.DATA_TAB);
 		_entryRamping = tab.add("Drive Ramping", true).getEntry();
-
-	}
-
-	/**
-	 * Limit the double between min and max. Just a safety precaution.
-	 * @param value current value of input
-	 * @param min minimum value to constrain the input into
-	 * @param max maximum value to constrain the input into
-	 * @return the limited value of the input
-	 */
-	private double limitValue(double value, double min, double max) {
-		return Math.min(Math.max(value, min), max);
 	}
 
 	/**
@@ -81,10 +70,13 @@ public class Drive extends SubsystemBase {
 		if (Math.abs(input-currControlScale) <= RAMPING_JUMP_THRESHOLD) {
 			nextCtrlScale = input;
 		}
-		nextCtrlScale = limitValue(nextCtrlScale, -MAX_CTRL_SCALE, MAX_CTRL_SCALE);
+		nextCtrlScale = Math.min(Math.max(nextCtrlScale, -MAX_CTRL_SCALE), MAX_CTRL_SCALE);
 		return nextCtrlScale;
 	}
 
+	/**
+	 * Toggles Acceleration Ramping
+	 */
 	public void toggleAccRamping() {
 		_isRamping = !_isRamping;
 	}
@@ -92,6 +84,7 @@ public class Drive extends SubsystemBase {
 	@Override
 	public void periodic() {
 		_entryRamping.setBoolean(_isRamping);
+
 		_left[0].getEncoder().setPositionConversionFactor(WHEEL_DIAMETER * Math.PI / GEAR_RATIO);
 		_left[1].getEncoder().setPositionConversionFactor(WHEEL_DIAMETER * Math.PI / GEAR_RATIO);
 		_right[0].getEncoder().setPositionConversionFactor(WHEEL_DIAMETER * Math.PI / GEAR_RATIO);

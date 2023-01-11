@@ -22,7 +22,6 @@ public class ManualDrive extends CommandBase {
 	private IControlInput _controls;
 	private double _controlScaleLong;
 	private double _controlScaleLat;
-	private boolean _isRamping;
 
 	public ManualDrive(Drive drive, IControlInput controls) {
 		if (drive == null) {
@@ -34,12 +33,7 @@ public class ManualDrive extends CommandBase {
 
 		_drive = drive;
 		_controls = controls;
-		_isRamping = true;
 		addRequirements(drive);
-	}
-
-	public void toggleAccRamping() {
-		_isRamping = !_isRamping;
 	}
 
 	@Override

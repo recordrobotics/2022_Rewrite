@@ -26,7 +26,7 @@ public class Drive extends SubsystemBase {
 		new CANSparkMax(RobotMap.DriveBase.RIGHT_BACK_MOTOR_PORT, CANSparkMax.MotorType.kBrushless)
 	};
 
-	private static final double RAMPING_JUMP_THRESHOLD = 0.1;
+	private static final double RAMPING_JUMP_THRESHOLD = 0.1; // If distance between target and current < this value, current = target
 	private static final double CTRL_NEUTRAL_POSITION = 0.0; // If the input is less than this constant, it is considered in a neutral position.
 	private static final double MAX_CTRL_SCALE = 1.0;
 

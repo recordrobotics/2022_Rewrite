@@ -81,7 +81,7 @@ public class RobotContainer {
 	private void initDashCommands() {
 		ShuffleboardTab tab = Shuffleboard.getTab(Constants.COMMANDS_TAB);
 		tab.add("Reset Climbers Encoder", new DashResetClimbEncoder(_climbers));
-		tab.add("Drive Acceleration Ramping", new DashRunProcedure(_drive::toggleAccRamping));
+		tab.add("Toggle Drive Acceleration Ramping", new DashRunProcedure(_drive::toggleAccRamping));
 		tab.add("Legacy Control", new DashRunProcedure(this::controlLegacy));
 		tab.add("Double Control", new DashRunProcedure(this::controlDouble));
 		tab.add("Middle Bar", new SeqLiftMid(_rotator, _climbers));

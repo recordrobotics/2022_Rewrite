@@ -54,7 +54,7 @@ public class Drive extends SubsystemBase {
 	 * Calculates the next input value for ramping.
 	 * @param _lowerTimeScale slower ramping time scale
 	 * @param _higherTimeScale faster ramping time scale
-	 * @param _isMaxScalingFaster if you push the joystick to its max, this determines whether it ramps faster
+	 * @param _isMaxScalingFaster Determines whether pushing joystick to max will accelerate faster
 	 * @param currControlScale current ramped control scale
 	 * @param input current input, or target value
 	 * @return the next control scale

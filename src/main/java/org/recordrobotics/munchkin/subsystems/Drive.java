@@ -7,9 +7,13 @@ package org.recordrobotics.munchkin.subsystems;
 import com.revrobotics.CANSparkMax;
 
 import org.recordrobotics.munchkin.RobotMap;
+import org.recordrobotics.munchkin.Constants;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drive extends SubsystemBase {
@@ -22,17 +26,64 @@ public class Drive extends SubsystemBase {
 		new CANSparkMax(RobotMap.DriveBase.RIGHT_BACK_MOTOR_PORT, CANSparkMax.MotorType.kBrushless)
 	};
 
+	private static final double RAMPING_JUMP_THRESHOLD = 0.1; // If distance between target and current < this value, current = target
+	private static final double CTRL_NEUTRAL_POSITION = 0.0; // If the input is less than this constant, it is considered in a neutral position.
+	private static final double MAX_CTRL_SCALE = 1.0;
+
+	private static final double GEAR_RATIO = 10.75;
+	private static final double WHEEL_DIAMETER = 6 * 25.4; // diameter in inches * conversion rate to millimeters
+
+	public boolean _isRamping = true;
+
+	private NetworkTableEntry _entryRamping;
+
 	private MotorControllerGroup _leftMotors = new MotorControllerGroup(_left);
 	private MotorControllerGroup _rightMotors = new MotorControllerGroup(_right);
 
 	private DifferentialDrive _differentialDrive = new DifferentialDrive(_leftMotors, _rightMotors);
 
-	private static final double GEAR_RATIO = 10.75;
-	private static final double WHEEL_DIAMETER = 6 * 25.4; // diameter in inches * conversion rate to millimeters
-
 	public Drive() {
 		_leftMotors.set(0);
 		_rightMotors.set(0);
+
+		ShuffleboardTab tab = Shuffleboard.getTab(Constants.DATA_TAB);
+		_entryRamping = tab.add("Drive Ramping", true).getEntry();
+	}
+
+	/**
+	 * Calculates the next input value for ramping.
+	 * @param _lowerTimeScale slower ramping time scale
+	 * @param _higherTimeScale faster ramping time scale
+	 * @param _isMaxScalingFaster Determines whether pushing joystick to max will accelerate faster
+	 * @param currControlScale current ramped control scale
+	 * @param input current input, or target value
+	 * @return the next control scale
+	 */
+	public double calcNextCtrlScale(double _lowerTimeScale, double _higherTimeScale, boolean _isMaxScalingFaster, double currControlScale, double input) {
+		double timeScale = _lowerTimeScale;
+		boolean isControlNeutral = Math.abs(input) <= CTRL_NEUTRAL_POSITION;
+		boolean isControlMax = Math.abs(input) == MAX_CTRL_SCALE;
+		if (isControlNeutral || isControlMax && _isMaxScalingFaster || !_isMaxScalingFaster && isControlNeutral) {
+			timeScale = _higherTimeScale;
+		}
+		double nextCtrlScale = currControlScale + (input - currControlScale)/timeScale;
+		if (Math.abs(input-currControlScale) <= RAMPING_JUMP_THRESHOLD) {
+			nextCtrlScale = input;
+		}
+		return nextCtrlScale;
+	}
+
+	/**
+	 * Toggles Acceleration Ramping
+	 */
+	public void toggleAccRamping() {
+		_isRamping = !_isRamping;
+	}
+
+	@Override
+	public void periodic() {
+		_entryRamping.setBoolean(_isRamping);
+
 		_left[0].getEncoder().setPositionConversionFactor(WHEEL_DIAMETER * Math.PI / GEAR_RATIO);
 		_left[1].getEncoder().setPositionConversionFactor(WHEEL_DIAMETER * Math.PI / GEAR_RATIO);
 		_right[0].getEncoder().setPositionConversionFactor(WHEEL_DIAMETER * Math.PI / GEAR_RATIO);

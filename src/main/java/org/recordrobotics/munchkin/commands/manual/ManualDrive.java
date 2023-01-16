@@ -6,6 +6,7 @@ package org.recordrobotics.munchkin.commands.manual;
 
 import org.recordrobotics.munchkin.control.IControlInput;
 import org.recordrobotics.munchkin.subsystems.Drive;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
@@ -14,9 +15,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ManualDrive extends CommandBase {
 
 	private static final double SPEED_MODIFIER = 0.5;
+	private static final double CTRL_RAMPING = 25.0;
+	private static final double MAX_CTRL_RAMPING = 15.0;
 
 	private Drive _drive;
 	private IControlInput _controls;
+	private double _controlScaleLong;
+	private double _controlScaleLat;
 
 	public ManualDrive(Drive drive, IControlInput controls) {
 		if (drive == null) {
@@ -33,8 +38,14 @@ public class ManualDrive extends CommandBase {
 
 	@Override
 	public void execute() {
-		_drive.move(_controls.getDriveLong() * SPEED_MODIFIER,
-			_controls.getDriveLat() * SPEED_MODIFIER);
+		if (_drive._isRamping) {
+			_controlScaleLong = _drive.calcNextCtrlScale(CTRL_RAMPING, MAX_CTRL_RAMPING, true, _controlScaleLong, _controls.getDriveLong());
+			_controlScaleLat = _drive.calcNextCtrlScale(CTRL_RAMPING, MAX_CTRL_RAMPING, true, _controlScaleLat, _controls.getDriveLat());
+			_drive.move(_controlScaleLong * SPEED_MODIFIER, _controlScaleLat * SPEED_MODIFIER);
+		} else {
+			_drive.move(_controls.getDriveLong() * SPEED_MODIFIER,
+				_controls.getDriveLat() * SPEED_MODIFIER);
+		}
 	}
 
 	@Override

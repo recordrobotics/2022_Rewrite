@@ -73,7 +73,6 @@ public class Vision extends SubsystemBase{
 			
 			// Gets target object from apriltag perspective photonvision
 			PhotonTrackedTarget target = result.getBestTarget();
-
 			Transform3d robot_to_april = target.getBestCameraToTarget()/*.plus(robotToCam.inverse())*/; // you could put the offset here if you were testing for reals
 			Transform3d april_to_robot = robot_to_april.inverse();
 			// Converts the Transform3d object into a Pose2d object. Probably not entirely necessary to shift everything to 2d but its 2:30 in the morning and honestly my brain is kind of not working

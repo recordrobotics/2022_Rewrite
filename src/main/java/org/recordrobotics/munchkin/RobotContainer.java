@@ -3,7 +3,6 @@ package org.recordrobotics.munchkin;
 import org.recordrobotics.munchkin.control.*;
 import org.recordrobotics.munchkin.subsystems.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.recordrobotics.munchkin.commands.dashboard.DashRunProcedure;

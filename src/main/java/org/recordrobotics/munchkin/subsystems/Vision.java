@@ -73,21 +73,20 @@ public class Vision extends SubsystemBase{
 			
 			// Gets target object from apriltag perspective photonvision
 			PhotonTrackedTarget target = result.getBestTarget();
-			Transform3d robot_to_cam = target.getBestCameraToTarget()/*.plus(robotToCam.inverse())*/; // you could put the offset here if you were testing for reals
-			Transform3d robot_from_apriltag_perspective = robot_to_cam.inverse();
 
-			// Gets the pose2d version of the transform3d. Creates a pose 2d object for the apriltag's perspective of the camera. Probably not necessary but its 2:30 in the morning and honestly my brain is kind of not working
-			Translation2d translation_value = robot_from_apriltag_perspective.getTranslation().toTranslation2d();
-			Rotation2d rotation_value = robot_from_apriltag_perspective.getRotation().toRotation2d();
-			Transform2d apriltag_to_robot_transform = new Transform2d(translation_value, rotation_value);
-			//Pose2d robot_from_apriltag_2d = new Pose2d(translation_value, rotation_value);
+			Transform3d robot_to_april = target.getBestCameraToTarget()/*.plus(robotToCam.inverse())*/; // you could put the offset here if you were testing for reals
+			Transform3d april_to_robot = robot_to_april.inverse();
+			// Converts the Transform3d object into a Pose2d object. Probably not entirely necessary to shift everything to 2d but its 2:30 in the morning and honestly my brain is kind of not working
+			Pose2d april_to_robot_pose2d = new Pose2d(
+				april_to_robot.getTranslation().toTranslation2d(), 
+				april_to_robot.getRotation().toRotation2d());
 
-			// Gets the fiducial ID and uses it to get the correct transform 2d object
+			// Gets the fiducial ID and uses it to get the correct transform 2d object, which it then inverses to get the april to global perspective
 			int targetID = target.getFiducialId();
-			Transform2d global_to_tag_transform = tag_transforms[targetID];
-
-			// creates the global to camera object
-			Transform2d global_to_camera = global_to_tag_transform.plus(apriltag_to_robot_transform);
+			Transform2d april_to_global = tag_transforms[targetID].inverse();
+			
+			// Uses the "Transform2d(Pose2d initial, Pose2d final)" feature to take the difference between april to robot and april to global
+			Pose2d global_to_camera = april_to_robot_pose2d.plus(april_to_global);
 
 			// Gets the X and Y or the transform
 			double global_x = global_to_camera.getX();

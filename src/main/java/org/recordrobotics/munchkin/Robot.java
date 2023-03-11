@@ -6,10 +6,14 @@ package org.recordrobotics.munchkin;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+//import org.recordrobotics.munchkin.subsystems.Vision;
 
 public class Robot extends TimedRobot {
 
 	private RobotContainer _robotContainer;
+
+
+	org.recordrobotics.munchkin.subsystems.Vision vision = new org.recordrobotics.munchkin.subsystems.Vision();
 
 	/**
 	 * Robot initialization
@@ -59,8 +63,18 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		// TODO
-	}
+
+		boolean hasTargets = vision.checkForTarget(vision.camera);
+		//System.out.println("WE GOT HERE");
+
+		if (hasTargets){
+			double[] globalPose = org.recordrobotics.munchkin.subsystems.Vision.estimateGlobalPose(vision.camera);
+			System.out.println("POSE: " + globalPose[0] + " " + globalPose[1] + " " + globalPose[2]);
+		}
+		}
+
+
+	
 
 	/**
 	 * Runs when robot enters teleop mode

@@ -47,7 +47,9 @@ public class RobotContainer {
 	private NetworkTableEntry _entryControl;
 
 	public RobotContainer() {
-		_controlInput = new LegacyControl(RobotMap.Control.LEGACY_GAMEPAD);
+		// _controlInput = new LegacyControl(RobotMap.Control.LEGACY_GAMEPAD);
+		_controlInput = new DoubleControl(RobotMap.Control.DOUBLE_GAMEPAD_1,
+			RobotMap.Control.DOUBLE_GAMEPAD_2);
 		_acquisition = new Acquisition();
 		_climbers = new Climbers();
 		_flywheel = new Flywheel();

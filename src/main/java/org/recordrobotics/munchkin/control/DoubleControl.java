@@ -24,7 +24,7 @@ public class DoubleControl implements IControlInput {
 
 	@Override
 	public double getDriveLat() {
-		return _gamepad1.getLeftX();
+		return _gamepad2.getLeftX();
 	}
 
 	@Override
@@ -45,10 +45,10 @@ public class DoubleControl implements IControlInput {
 		boolean backward = _gamepad1.getLeftBumper() || _gamepad1.getRightBumper();
 
 		// Forward takes precedence
-		if (forward)
+		/* if (forward)
 			return 1;
 		else if (backward)
-			return -1;
+			return -1; */
 		return 0;
 	}
 
@@ -60,19 +60,19 @@ public class DoubleControl implements IControlInput {
 		boolean in = _gamepad2.getLeftBumper() || _gamepad2.getRightBumper();
 
 		// Out takes precedence
-		if (out)
+		/* if (out)
 			return 1;
 		else if (in)
-			return -1;
+			return -1; */
 		return 0;
 	}
 
 	@Override
 	public FlywheelState getFlywheel() {
-		if (_gamepad2.getXButtonPressed())
+		if (_gamepad1.getXButtonPressed())
 			_btnX = !_btnX;
 		// We still want to check Y, to reset it
-		if (_gamepad2.getYButtonPressed())
+		if (_gamepad1.getYButtonPressed())
 			_btnY = !_btnY;
 
 		// If X not pressed, clear Y
